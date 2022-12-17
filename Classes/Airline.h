@@ -11,6 +11,10 @@ private:
     string airline_country;
 public:
     Airline(string airline_code1, string airline_name1, string callsign1, string airline_country1);
+    string getAirlinecode() const;
+    string getAirlinename() const;
+    string getAirlinecallsign() const;
+    string getAirlinecountry() const;
 
 };
 

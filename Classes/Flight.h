@@ -10,6 +10,9 @@ private:
     string airline;
 public:
     Flight(string source1 , string target1, string airline1);
+    string getFlightsource() const;
+    string getFlighttarget() const;
+    string getFlightairline() const;
 };
 
 

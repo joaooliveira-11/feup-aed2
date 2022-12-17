@@ -1,6 +1,11 @@
 #include <iostream>
+#include "Classes/Reading.h"
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    vector<Airline> airlines;
+    Reading reading = Reading();
+
+
+
     return 0;
 }
