@@ -1,19 +1,30 @@
 #include <iostream>
 #include "Classes/Reading.h"
+#include "Classes/Graph.h"
+#include "Classes/Flight.h"
 
 int main() {
     Reading reading = Reading();
-/*
+
     vector<Flight> flights; // Source,Target,Airline
     flights = reading.readFlights();
+    /*
     for(Flight flight : flights){
         cout << flight.getFlightsource() << endl;
         cout << flight.getFlighttarget() << endl;
         cout << flight.getFlightairline() << endl;
     }
-    ta a dar
-*/
-    /*
+     */
+//    ta a dar
+    Graph voos(flights.size()-1,true);
+    int pos = 0;
+    for(auto flight: flights){
+        voos.addEdge(flight.getFlightsource(),flight.getFlighttarget(),flight.getFlightairline(), pos);
+        pos++;
+    }
+    cout<<"deve ter dado" << endl;
+    voos.verNodes();
+        /*
     airports = reading.readAirports();
     vector<Airport> airports; // Code,Name,City,Country,Latitude,Longitude
     for(Airport airport : airports){
