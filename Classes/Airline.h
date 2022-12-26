@@ -15,6 +15,7 @@ public:
     string getAirlinename() const;
     string getAirlinecallsign() const;
     string getAirlinecountry() const;
+    bool operator==(const Airline& other) const;
 
 };
 

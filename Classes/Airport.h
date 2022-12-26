@@ -22,6 +22,7 @@ public:
     string getAirportcountry() const;
     float getAirportlatitude() const;
     float getAirportlongitude() const;
+    bool operator==(const Airport& other) const;
 };
 
 

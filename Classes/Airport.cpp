@@ -9,3 +9,7 @@ string Airport::getAirportcity() const {return city;}
 string Airport::getAirportcountry() const {return airport_country;}
 float Airport::getAirportlatitude() const {return latitute;}
 float Airport::getAirportlongitude() const {return longitude;}
+bool Airport::operator==(const Airport& other) const{
+    return this->airport_code == other.airport_code && this->airport_name == other.airport_name && this->city == other.city
+    && this->airport_country == other.airport_country && this->latitute == other.latitute && this->longitude == other.longitude;
+}

@@ -26,6 +26,7 @@ private:
     int hash(const T& x, int tableSize);
     void rehash();
     void makeEmpty();
+    bool EqualFunc(const T& x, const T& y);
 
 public:
     explicit HashTable(int size = 10000) : array(size), currentSize(0) {}

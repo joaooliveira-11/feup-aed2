@@ -77,4 +77,9 @@ void HashTable<T>::rehash(){
     }
 }
 
+template <class T>
+bool HashTable<T>::EqualFunc(const T& x, const T& y){
+    return x == y;
+}
+
 
