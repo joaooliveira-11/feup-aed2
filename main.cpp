@@ -3,7 +3,7 @@
 
 int main() {
     Reading reading = Reading();
-/*
+
     vector<Flight> flights; // Source,Target,Airline
     flights = reading.readFlights();
     for(Flight flight : flights){
@@ -11,8 +11,6 @@ int main() {
         cout << flight.getFlighttarget() << endl;
         cout << flight.getFlightairline() << endl;
     }
-    ta a dar
-*/
     /*
     airports = reading.readAirports();
     vector<Airport> airports; // Code,Name,City,Country,Latitude,Longitude
@@ -37,7 +35,6 @@ int main() {
     }
      ta a dar
      */
-
 
     return 0;
 }
