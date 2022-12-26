@@ -6,10 +6,7 @@
 #include <sstream>
 #include <iostream>
 
-
-void Reading() {}
-
-vector<Airline> Reading::readAirLines() {
+void Reading::readAirlines() {
     int verify = 0;
     vector<Airline> airlines;
     string AIRLINE_CODE, AIRLINE_NAME, CALLSIGN, AIRLINE_COUNTRY;
@@ -29,14 +26,12 @@ vector<Airline> Reading::readAirLines() {
         getline(iss, AIRLINE_COUNTRY, ',');
 
         Airline airline1 = Airline(AIRLINE_CODE, AIRLINE_NAME, CALLSIGN, AIRLINE_COUNTRY);
-        airlines.push_back(airline1);
+        airlineTable.insert(airline1);
     }
-    return airlines;
 }
 
-vector<Airport> Reading::readAirports(){
+void Reading::readAirports(){
         int verify = 0;
-        vector<Airport> airports;
         string AIRPORT_CODE, AIRPORT_NAME, CITY, AIRPORT_COUNTRY;
         float LATITUDE, LONGITUDE;
         char c;
@@ -57,12 +52,11 @@ vector<Airport> Reading::readAirports(){
             iss >> LONGITUDE >> c;
 
             Airport airport1 = Airport(AIRPORT_CODE, AIRPORT_NAME, CITY, AIRPORT_COUNTRY,LATITUDE, LONGITUDE );
-            airports.push_back(airport1);
+            airportTable.insert(airport1);
         }
-        return airports;
 }
 
-
+/*
 vector<Flight> Reading::readFlights(){
     int verify = 0;
     vector<Flight> flights;
@@ -85,3 +79,4 @@ vector<Flight> Reading::readFlights(){
     }
     return flights;
 }
+ */
