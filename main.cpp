@@ -14,7 +14,7 @@ int main() {
         cout << flight.getFlighttarget() << endl;
         cout << flight.getFlightairline() << endl;
     }
-     */
+*/
 //    ta a dar
     Graph voos(flights.size()-1,true);
     int pos = 0;
@@ -25,6 +25,7 @@ int main() {
     cout<<"deve ter dado" << endl;
     voos.verNodes();
         /*
+
     airports = reading.readAirports();
     vector<Airport> airports; // Code,Name,City,Country,Latitude,Longitude
     for(Airport airport : airports){
@@ -48,7 +49,6 @@ int main() {
     }
      ta a dar
      */
-
 
     return 0;
 }
