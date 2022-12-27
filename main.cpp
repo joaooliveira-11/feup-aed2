@@ -5,15 +5,8 @@
 
 int main() {
     Reading reading;
-    reading.readAirports();
-    reading.readAirlines();
 
-    reading.printAIRPORTtablesize();
-    reading.printAIRLINEtablesize();
-
-    Graph voos = reading.readFlights();
+    Graph voos = reading.readAllFiles();
     voos.verNodes();
-
-
     return 0;
 }

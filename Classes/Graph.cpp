@@ -7,6 +7,29 @@
 Graph::Graph(int num, bool dir) : n(num), hasDir(dir), nodes(num+1) {
 }
 
+void Graph::insertAirport_intotable(Airport airport){
+    this->airportTable.insert(airport);
+}
+
+void Graph::insertAirline_intotable(Airline airline){
+    this->airlineTable.insert(airline);
+}
+void Graph::set_airportTable(unordered_set<Airport, AirportHash, AirportEqual> airportTable1){
+    this->airportTable = airportTable1;
+}
+
+void Graph::set_airlineTable(std::unordered_set<Airline, AirlineHash, AirlineEqual> airlineTable1){
+    this->airlineTable = airlineTable1;
+}
+
+int Graph::get_airportTable_size(){
+    return this->airportTable.size();
+}
+
+int Graph::get_airlineTable_size(){
+    this->airlineTable.size();
+}
+
 void Graph::addEdge(string src, string dest, string company, int pos){
     nodes[pos].src=src;
     bool flag = true;

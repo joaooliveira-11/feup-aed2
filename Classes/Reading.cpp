@@ -5,11 +5,12 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
-
 #include "Graph.h"
 
-void Reading::readAirlines() {
-    int verify = 0;
+Graph Reading::readAllFiles(){
+    Graph aux(0,true);
+
+    int verify1 = 0;
     vector<Airline> airlines;
     string AIRLINE_CODE, AIRLINE_NAME, CALLSIGN, AIRLINE_COUNTRY;
 
@@ -18,8 +19,8 @@ void Reading::readAirlines() {
 
     for (string line; getline(in, line);) {
         istringstream iss(line);
-        if (verify == 0) {
-            verify++;
+        if (verify1 == 0) {
+            verify1++;
             continue;
         }
         getline(iss, AIRLINE_CODE, ',');
@@ -28,51 +29,47 @@ void Reading::readAirlines() {
         getline(iss, AIRLINE_COUNTRY, ',');
 
         Airline airline1 = Airline(AIRLINE_CODE, AIRLINE_NAME, CALLSIGN, AIRLINE_COUNTRY);
-        airlineTable.insert(airline1);
+        aux.insertAirline_intotable(airline1);
     }
-}
 
-void Reading::readAirports(){
-        int verify = 0;
-        int count = 1;
-        string AIRPORT_CODE, AIRPORT_NAME, CITY, AIRPORT_COUNTRY;
-        float LATITUDE, LONGITUDE;
-        char c;
-        ifstream in("../airports.csv");
-        if (!in.is_open()) exit(EXIT_FAILURE);
+    int verify2 = 0;
+    int count = 1;
+    string AIRPORT_CODE, AIRPORT_NAME, CITY, AIRPORT_COUNTRY;
+    float LATITUDE, LONGITUDE;
+    char c;
+    ifstream in2("../airports.csv");
+    if (!in2.is_open()) exit(EXIT_FAILURE);
 
-        for (string line; getline(in, line);) {
-            istringstream iss(line);
-            if (verify == 0) {
-                verify++;
-                continue;
-            }
-            getline(iss, AIRPORT_CODE, ',');
-            getline(iss,AIRPORT_NAME, ',');
-            getline(iss, CITY, ',');
-            getline(iss, AIRPORT_COUNTRY, ',');
-            iss >> LATITUDE >> c;
-            iss >> LONGITUDE >> c;
-
-            Airport airport1 = Airport(AIRPORT_CODE, AIRPORT_NAME, CITY, AIRPORT_COUNTRY,LATITUDE, LONGITUDE, count);
-            airportTable.insert(airport1);
-            count++;
+    for (string line; getline(in2, line);) {
+        istringstream iss(line);
+        if (verify2 == 0) {
+            verify2++;
+            continue;
         }
+        getline(iss, AIRPORT_CODE, ',');
+        getline(iss,AIRPORT_NAME, ',');
+        getline(iss, CITY, ',');
+        getline(iss, AIRPORT_COUNTRY, ',');
+        iss >> LATITUDE >> c;
+        iss >> LONGITUDE >> c;
 
-}
+        Airport airport1 = Airport(AIRPORT_CODE, AIRPORT_NAME, CITY, AIRPORT_COUNTRY,LATITUDE, LONGITUDE, count);
+        aux.insertAirport_intotable(airport1);
+        count++;
+    }
 
 
-Graph Reading::readFlights(){
-    int verify = 0;
+
+    int verify3 = 0;
     vector<Flight> flights;
     string SOURCE, TARGET,AIRLINE;
-    ifstream in("../flights.csv");
-    if (!in.is_open()) exit(EXIT_FAILURE);
+    ifstream in3("../flights.csv");
+    if (!in3.is_open()) exit(EXIT_FAILURE);
 
-    for (string line; getline(in, line);) {
+    for (string line; getline(in3, line);) {
         istringstream iss(line);
-        if (verify == 0) {
-            verify++;
+        if (verify3 == 0) {
+            verify3++;
             continue;
         }
         getline(iss, SOURCE, ',');
@@ -82,14 +79,19 @@ Graph Reading::readFlights(){
         Flight flight1 = Flight(SOURCE, TARGET, AIRLINE );
         flights.push_back(flight1);
     }
-    Graph voos((int)airportTable.size(),true);
+
+    int size_aux = aux.get_airportTable_size();
+
+    Graph voos((int)size_aux,true);
+    voos.set_airportTable(aux.airportTable);
+    voos.set_airlineTable(aux.airlineTable);
+
     for(auto flight: flights){
-        Airport aux = Airport(flight.getFlightsource());
-        std::unordered_set<Airport>::const_iterator itr = this->airportTable.find(aux);
+        Airport aux1 = Airport(flight.getFlightsource());
+        std::unordered_set<Airport>::const_iterator itr = voos.airportTable.find(aux1);
         int pos =  itr->getNumCode();
         voos.addEdge(flight.getFlightsource(),flight.getFlighttarget(),flight.getFlightairline(), pos-1);
 
     }
-
     return voos;
 }
