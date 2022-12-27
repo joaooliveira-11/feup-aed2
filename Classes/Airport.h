@@ -16,12 +16,14 @@ private:
     float longitude;
 public:
     Airport(string airport_code1, string airport_name1, string city, string airport_country1, float latitude1, float longitude1);
+    Airport();
     string getAirportcode() const;
     string getAirportname() const;
     string getAirportcity() const;
     string getAirportcountry() const;
     float getAirportlatitude() const;
     float getAirportlongitude() const;
+    bool operator==(const Airport& other) const;
 };
 
 

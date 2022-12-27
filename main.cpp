@@ -4,17 +4,15 @@
 #include "Classes/Flight.h"
 
 int main() {
-    Reading reading = Reading();
+    Reading reading;
+    reading.readAirports();
+    reading.readAirlines();
 
-    vector<Flight> flights; // Source,Target,Airline
-    flights = reading.readFlights();
+    reading.printAIRPORTtablesize();
+    reading.printAIRLINEtablesize();
+
+
     /*
-    for(Flight flight : flights){
-        cout << flight.getFlightsource() << endl;
-        cout << flight.getFlighttarget() << endl;
-        cout << flight.getFlightairline() << endl;
-    }
-*/
 //    ta a dar
     Graph voos(flights.size()-1,true);
     int pos = 0;
