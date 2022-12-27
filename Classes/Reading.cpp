@@ -6,6 +6,8 @@
 #include <sstream>
 #include <iostream>
 
+#include "Graph.h"
+
 void Reading::readAirlines() {
     int verify = 0;
     vector<Airline> airlines;
@@ -32,6 +34,7 @@ void Reading::readAirlines() {
 
 void Reading::readAirports(){
         int verify = 0;
+        int count = 1;
         string AIRPORT_CODE, AIRPORT_NAME, CITY, AIRPORT_COUNTRY;
         float LATITUDE, LONGITUDE;
         char c;
@@ -51,13 +54,15 @@ void Reading::readAirports(){
             iss >> LATITUDE >> c;
             iss >> LONGITUDE >> c;
 
-            Airport airport1 = Airport(AIRPORT_CODE, AIRPORT_NAME, CITY, AIRPORT_COUNTRY,LATITUDE, LONGITUDE );
+            Airport airport1 = Airport(AIRPORT_CODE, AIRPORT_NAME, CITY, AIRPORT_COUNTRY,LATITUDE, LONGITUDE, count);
             airportTable.insert(airport1);
+            count++;
         }
+
 }
 
-/*
-vector<Flight> Reading::readFlights(){
+
+Graph Reading::readFlights(){
     int verify = 0;
     vector<Flight> flights;
     string SOURCE, TARGET,AIRLINE;
@@ -77,6 +82,14 @@ vector<Flight> Reading::readFlights(){
         Flight flight1 = Flight(SOURCE, TARGET, AIRLINE );
         flights.push_back(flight1);
     }
-    return flights;
+    Graph voos((int)airportTable.size(),true);
+    for(auto flight: flights){
+        Airport aux = Airport(flight.getFlightsource());
+        std::unordered_set<Airport>::const_iterator itr = this->airportTable.find(aux);
+        int pos =  itr->getNumCode();
+        voos.addEdge(flight.getFlightsource(),flight.getFlighttarget(),flight.getFlightairline(), pos-1);
+
+    }
+
+    return voos;
 }
- */

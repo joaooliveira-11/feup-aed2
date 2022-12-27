@@ -29,6 +29,7 @@ public:
     void rehash();
     void makeEmpty();
     bool EqualFunc(const T& x, const T& y);
+    int findCodes(string code);
 
     explicit HashTable(int size = 10000) : array(size), currentSize(0) {}
 };

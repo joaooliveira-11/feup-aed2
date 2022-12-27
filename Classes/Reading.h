@@ -8,17 +8,25 @@
 #include <set>
 #include <unordered_set>
 #include "HashTable.h"
+#include "Graph.h"
 
 struct AirportHash {
     std::size_t operator()(const Airport& airport) const {
+        /*
         std::size_t h = 0;
         h = 37 * h + std::hash<std::string>()(airport.getAirportcode());
-        h = 37 * h + std::hash<std::string>()(airport.getAirportname());
-        h = 37 * h + std::hash<std::string>()(airport.getAirportcity());
-        h = 37 * h + std::hash<std::string>()(airport.getAirportcountry());
-        h = 37 * h + std::hash<float>()(airport.getAirportlatitude());
-        h = 37 * h + std::hash<float>()(airport.getAirportlongitude());
-        return h;
+*/
+        int v = 0;
+        vector<char> chars;
+
+        for(auto c : airport.getAirportcode()){
+            chars.push_back(c);
+        }
+        char first = chars[0];
+        char second = chars[1];
+        char third = chars[2];
+        v = first + second*'A' + third*'A'*'A';
+        return v;
     }
 };
 
@@ -60,6 +68,8 @@ public:
     std::unordered_set<Airline, AirlineHash, AirlineEqual> airlineTable;
     void readAirports();
     void readAirlines();
+
+    Graph readFlights();
 };
 
 #endif

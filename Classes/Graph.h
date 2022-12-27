@@ -7,13 +7,14 @@
 #include <vector>
 #include <iostream>
 #include <stack>
+#include "Airport.h"
 
 using namespace std;
 
 class Graph {
     struct Edge {
         string dest;
-        string company;
+        list<string> company;
     };
 
     struct Node {
