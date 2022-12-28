@@ -69,10 +69,10 @@ class Graph {
 
     int n;
     bool hasDir;        // false: undirected; true: directed
-    vector<Node> nodes; // The list of nodes being represented
-
 
 public:
+    vector<Node> nodes; // The list of nodes being representedq
+
     // Constructor: nr nodes and direction (default: undirected)
     Graph(int nodes, bool dir = false);
 
@@ -92,6 +92,8 @@ public:
     int get_airportTable_size();
 
     int get_airlineTable_size();
+
+    vector<Node> get_nodes();
 
     std::unordered_set<Airport, AirportHash, AirportEqual> airportTable;
     std::unordered_set<Airline, AirlineHash, AirlineEqual> airlineTable;

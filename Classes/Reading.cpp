@@ -91,7 +91,6 @@ Graph Reading::readAllFiles(){
         std::unordered_set<Airport>::const_iterator itr = voos.airportTable.find(aux1);
         int pos =  itr->getNumCode();
         voos.addEdge(flight.getFlightsource(),flight.getFlighttarget(),flight.getFlightairline(), pos-1);
-
     }
     return voos;
 }

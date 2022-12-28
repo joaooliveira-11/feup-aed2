@@ -1,12 +1,7 @@
-#include <iostream>
-#include "Classes/Reading.h"
-#include "Classes/Graph.h"
-#include "Classes/Flight.h"
+#include "Classes/Menu.h"
 
 int main() {
-    Reading reading;
-
-    Graph voos = reading.readAllFiles();
-    voos.verNodes();
+    Menu menu = Menu();
+    menu.readmenu();
     return 0;
 }

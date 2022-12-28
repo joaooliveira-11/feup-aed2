@@ -30,6 +30,10 @@ int Graph::get_airlineTable_size(){
     this->airlineTable.size();
 }
 
+vector<Graph::Node> Graph::get_nodes(){
+    return this->nodes;
+}
+
 void Graph::addEdge(string src, string dest, string company, int pos){
     nodes[pos].src=src;
     bool flag = true;
