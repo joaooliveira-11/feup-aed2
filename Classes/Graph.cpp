@@ -1,6 +1,7 @@
 
 
 #include <stack>
+#include <queue>
 #include "Graph.h"
 
 
@@ -64,4 +65,62 @@ void Graph::verNodes(){
             }
         }
     }
+}
+
+void Graph::setFalse() {
+    for(Node &node : this->nodes){
+        node.visited = false;
+    }
+}
+void Graph::resetDist() {
+    for(Node &node : this->nodes){
+        node.dist = -1;
+    }
+}
+
+void Graph::bfs(int v) {
+    this->setFalse();
+    this->resetDist();
+    queue<int> q; // queue of unvisited nodes
+    q.push(v);
+    nodes[v].dist = 0;
+    nodes[v].visited = true;
+    while (!q.empty()) { // while there are still unvisited nodes
+        int u = q.front();
+        q.pop();
+        for (auto &e : nodes[u].adj) {
+            Airport aux = Airport(e.dest);
+            std::unordered_set<Airport>::const_iterator itr_aux = this->airportTable.find(aux);
+            int w = itr_aux->getNumCode()-1;
+            if (!nodes[w].visited) {
+                nodes[w].dist = nodes[u].dist +1;
+                nodes[w].visited = true;
+                q.push(w);
+
+            }
+        }
+    }
+}
+
+/*
+ret > 0 -> "distancia" entre os aeroportos
+ret = 0 -> mesmo aeroporto
+ret =-1 -> não é possível chegar ao aeroporto
+ret =-2 -> um dos aeroportos não existe
+ */
+int Graph::distTwoAirports(string airpA,string airpB ){
+    if ( airpA==airpB){
+        return 0;
+    }
+    Airport aux1 = Airport(airpA);
+    std::unordered_set<Airport>::const_iterator itr_airpA =this->airportTable.find(aux1);
+    Airport aux2 = Airport(airpB);
+    std::unordered_set<Airport>::const_iterator itr_airpB  =this->airportTable.find(aux2);
+    if( itr_airpA==this->airportTable.end() or itr_airpB==this->airportTable.end() ){
+        return -2;
+    }
+    int airpA_numCode = itr_airpA->getNumCode();
+    int airpB_numCode = itr_airpB->getNumCode();
+    this->bfs(airpA_numCode-1);
+    return (this->nodes[airpB_numCode-1].dist);
 }

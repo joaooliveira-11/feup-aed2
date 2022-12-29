@@ -22,6 +22,7 @@ class Graph {
         string src;
         list<Edge> adj;
         bool visited;   // As the node been visited on a search?
+        int dist;
 
     };
     struct AirportHash {
@@ -70,6 +71,7 @@ class Graph {
     int n;
     bool hasDir;        // false: undirected; true: directed
 
+
 public:
     vector<Node> nodes; // The list of nodes being representedq
 
@@ -92,6 +94,15 @@ public:
     int get_airportTable_size();
 
     int get_airlineTable_size();
+
+    void setFalse();
+
+    void resetDist();
+
+    void bfs(int v);
+
+    int distTwoAirports(string airpA,string airpB );
+
 
     vector<Node> get_nodes();
 

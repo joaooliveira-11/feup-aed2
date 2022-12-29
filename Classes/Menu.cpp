@@ -14,7 +14,10 @@ void Menu::readmenu() {
     string answer;
     string airport_code;
     char tecla;
+    cout << voos.distTwoAirports("OPO","PXO") ;
 
+    //voos.bfs(17);
+/*
     while(flag){
         cout << "Press a key according to what you want to do: \n"
                 "1 : Ver todas as informaoes de um aeroporto. \n"
@@ -99,5 +102,5 @@ void Menu::readmenu() {
                 break;
         }
     }
-
+*/
 }

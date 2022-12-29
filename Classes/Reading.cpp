@@ -81,8 +81,7 @@ Graph Reading::readAllFiles(){
     }
 
     int size_aux = aux.get_airportTable_size();
-
-    Graph voos((int)size_aux,true);
+    Graph voos((int)size_aux-1,true);
     voos.set_airportTable(aux.airportTable);
     voos.set_airlineTable(aux.airlineTable);
 
