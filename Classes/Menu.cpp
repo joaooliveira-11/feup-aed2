@@ -108,8 +108,10 @@ void Menu::readmenu() {
     string airport_code, departure_airport, arrival_airport;
     char tecla;
     int top_k;
-    //cout << voos.distTwoAirports("OPO","PXO") ;
+    cout << voos.distTwoAirports("OPO","AKF") ;
     //voos.bfs(17);
+
+    /*
     while(flag){
         cout << "Press a key according to what you want to do: \n"
                 "1 : Ver a melhor maneira de voar de um local para o outro. (Local = aeroporto) \n"
@@ -269,4 +271,5 @@ void Menu::readmenu() {
                 break;
         }
     }
+     */
 }

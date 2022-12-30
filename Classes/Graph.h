@@ -100,6 +100,7 @@ public:
     void resetDist();
 
     void bfs(int v);
+    list<list<string>> bfs_2(string v, string d);
 
     int distTwoAirports(string airpA,string airpB );
 
