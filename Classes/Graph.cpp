@@ -96,7 +96,6 @@ void Graph::bfs(int v) {
                 nodes[w].dist = nodes[u].dist +1;
                 nodes[w].visited = true;
                 q.push(w);
-
             }
         }
     }
