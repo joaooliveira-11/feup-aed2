@@ -101,6 +101,7 @@ public:
 
     void bfs(int v);
     list<list<string>> bfs_2(string v, string d);
+    int bfs_max_distance(int a);
 
     int distTwoAirports(string airpA,string airpB );
 

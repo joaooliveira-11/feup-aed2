@@ -27,7 +27,18 @@ void rede_nrCompanhias(){
     Graph voos = reading.readAllFiles();
     cout << "Esta rede apresenta um total de " << voos.airlineTable.size() << " companhias" << endl;
 }
+void rede_diametro(){
+    Reading reading;
+    Graph voos = reading.readAllFiles();
 
+    int max = 0;
+    voos.nodes[0].visited = true;
+    for (int v = 0; v < voos.nodes.size(); v++) {
+        int d = voos.bfs_max_distance(v);
+        if (d > max) max = d;
+    }
+    cout << "Esta rede apresenta um diametro igual a " << max << endl;
+}
 void pais_nrAeroportos(string pais){
     Reading reading;
     Graph voos = reading.readAllFiles();
@@ -89,7 +100,10 @@ void companhia_nrAeroportos(string airline1){
     for(auto itr = voos.nodes.begin(); itr != voos.nodes.end(); itr++){
         for(auto el : itr->adj){
             for(auto airline : el.company){
-                if(airline == airline1) air_ports.insert(el.dest);
+                if(airline == airline1){
+                    air_ports.insert(el.dest);
+                    air_ports.insert(itr->src);
+                }
             }
         }
     }
@@ -97,6 +111,67 @@ void companhia_nrAeroportos(string airline1){
     else cout << "Este companhia faz ligacaos entre " << air_ports.size() << " aeroportos" << endl;
 }
 
+void aeroporto_nrVoos(Airport airport1){
+    Reading reading;
+    Graph voos = reading.readAllFiles();
+
+    auto itr = voos.airportTable.find(airport1);
+
+
+    int number_voos = 0;
+    for (auto el: voos.nodes[itr->getNumCode() - 1].adj) {
+        number_voos += el.company.size();
+    }
+    cout << "Existe um total de" << " " << number_voos << " voos a partir deste aeroporto" << endl;
+}
+
+void nrCompanhias_voos_Airport(Airport airport1){
+    Reading reading;
+    Graph voos = reading.readAllFiles();
+
+    auto itr = voos.airportTable.find(airport1);
+    set<string> airlines_names;
+    for (auto el: voos.nodes[itr->getNumCode() - 1].adj) {
+        for (string airline_code: el.company) {
+            airlines_names.insert(airline_code);
+        }
+    }
+    cout << "Existe um total de" << " " << airlines_names.size()
+         << " companhias aereas diferentes envolvidas nos voos que partem deste aeroporto. \n";
+
+    cout << "As companhias envolvidas sao as seguintes: \n";
+    for (string airline_code: airlines_names)
+        cout << airline_code << endl;
+}
+
+void nr_destinos_aeroporto(Airport airport1){
+    Reading reading;
+    Graph voos = reading.readAllFiles();
+
+    auto itr = voos.airportTable.find(airport1);
+
+    int numero_destinos = 0;
+    for (auto el: voos.nodes[itr->getNumCode() - 1].adj) numero_destinos++;
+    cout << "Existe um total de" << " " << numero_destinos
+         << " aeroportos/destinos diferentes possiveis de alcancar atraves deste aeroporto. \n";
+}
+
+void nr_paises_aeroporto(Airport airport1){
+    Reading reading;
+    Graph voos = reading.readAllFiles();
+
+    set<string> numero_paises;
+    auto itr = voos.airportTable.find(airport1);
+    string country = itr->getAirportcountry();
+    for (auto el: voos.nodes[itr->getNumCode() - 1].adj) {
+        Airport aux = Airport(el.dest);
+        auto itr = voos.airportTable.find(aux);
+        string country_aux = itr->getAirportcountry();
+        if (country != country_aux) numero_paises.insert(country_aux);
+    }
+    cout << "Existe um total de" << " " << numero_paises.size()
+         << " paises diferentes possiveis de alcancar atraves deste aeroporto. \n";
+}
 void Menu::readmenu() {
 
     Reading reading;
@@ -108,10 +183,9 @@ void Menu::readmenu() {
     string airport_code, departure_airport, arrival_airport;
     char tecla;
     int top_k;
-    cout << voos.distTwoAirports("OPO","AKF") ;
+    //cout << voos.distTwoAirports("OPO","AKF") ;
     //voos.bfs(17);
 
-    /*
     while(flag){
         cout << "Press a key according to what you want to do: \n"
                 "1 : Ver a melhor maneira de voar de um local para o outro. (Local = aeroporto) \n"
@@ -165,50 +239,19 @@ void Menu::readmenu() {
                         cin >> tecla;
                         switch (tecla) {
                             case '1': {
-                                int number_voos = 0;
-                                for (auto el: voos.nodes[itr->getNumCode() - 1].adj) {
-                                    number_voos += el.company.size();
-                                }
-                                cout << "Existe um total de" << " " << number_voos << " voos a partir deste aeroporto"
-                                     << endl;
+                                aeroporto_nrVoos(airport);
                                 break;
                             }
                             case '2': {
-                                set<string> airlines_names;
-                                for (auto el: voos.nodes[itr->getNumCode() - 1].adj) {
-                                    for (string airline_code: el.company) {
-                                        airlines_names.insert(airline_code);
-                                    }
-                                }
-                                cout << "Existe um total de" << " " << airlines_names.size()
-                                     << " companhias aereas diferentes envolvidas nos voos que partem deste aeroporto. \n";
-
-                                cout << "Deseja saber quais sao as companhias aereas envolvidas? \n";
-                                cin >> answer;
-                                if (answer == "yes")
-                                    for (string airline_code: airlines_names)
-                                        cout << airline_code << endl;
+                                nrCompanhias_voos_Airport(airport);
                                 break;
                             }
                             case '3': {
-                                int numero_destinos = 0;
-                                for (auto el: voos.nodes[itr->getNumCode() - 1].adj) numero_destinos++;
-                                cout << "Existe um total de" << " " << numero_destinos
-                                     << " aeroportos/destinos diferentes possiveis de alcancar atraves deste aeroporto. \n";
+                                nr_destinos_aeroporto(airport);
                                 break;
                             }
                             case '4': {
-                                set<string> numero_paises;
-                                auto itr = voos.airportTable.find(airport);
-                                string country = itr->getAirportcountry();
-                                for (auto el: voos.nodes[itr->getNumCode() - 1].adj) {
-                                    Airport aux = Airport(el.dest);
-                                    auto itr = voos.airportTable.find(aux);
-                                    string country_aux = itr->getAirportcountry();
-                                    if (country != country_aux) numero_paises.insert(country_aux);
-                                }
-                                cout << "Existe um total de" << " " << numero_paises.size()
-                                     << " paises diferentes possiveis de alcancar atraves deste aeroporto. \n";
+                                nr_paises_aeroporto(airport);
                                 break;
                             }
                             case 'q':
@@ -231,7 +274,7 @@ void Menu::readmenu() {
                         rede_nrAeroportos();
                         rede_nrVoos();
                         rede_nrCompanhias();
-                        // falta diametro
+                        rede_diametro();  // colocar a opcao de quer saber o diametro? porque demora muito tempo uma pesquisa em largura com 69k dados
                         // falta top k
                         break;
                     case '2': {
@@ -246,7 +289,6 @@ void Menu::readmenu() {
                         pais_nrCompanhias(country);  // perguntar ao prof se é o numero de companhias areas envolvidas em voos
                                                      // que saem de areportos portugueses
                                                      // ou de fundação portuguesa no ficheiro airlines (exemplo portugal)
-                        // falta diametro
                         // falta top k
                         break;
                     }
@@ -258,7 +300,6 @@ void Menu::readmenu() {
                         cin >> top_k;
                         companhia_nrVoos(airline);
                         companhia_nrAeroportos(airline);
-                        //falta diametro
                         // falta top k
                         break;
                 }
@@ -271,5 +312,5 @@ void Menu::readmenu() {
                 break;
         }
     }
-     */
+
 }
