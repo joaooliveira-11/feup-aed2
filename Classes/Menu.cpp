@@ -207,6 +207,12 @@ void Menu::readmenu() {
     char tecla;
     int top_k;
 
+    list<string> aux;
+    aux.push_back("SWR");
+    aux.push_back("RYR");
+    aux.push_back("TAP");
+    voos.distTwoAirportsAirlineRest("OPO","PXO",aux);
+
 
     while(flag){
         cout << "Press a key according to what you want to do: \n"
@@ -355,4 +361,5 @@ void Menu::readmenu() {
                 break;
         }
     }
+     
 }

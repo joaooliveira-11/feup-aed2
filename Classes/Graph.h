@@ -96,10 +96,14 @@ public:
     void resetDist();
 
     void bfs(int v);
-    list<list<string>> bfs_2(string v, string d);
+    list<list<string>> distTwoAiports_bfs(string v, string d);
     int bfs_max_distance(int a);
 
     int distTwoAirports(string airpA,string airpB );
+
+    int distTwoAirportsAirlineRest(string airpA,string airpB, list<string> airlines );
+
+    list<list<string>> distTwoAiportsWithRest_bfs(string v, string d, list<string> airlines);
 
     int countReachableAirports(string startAirport, int maxFlights);
 
