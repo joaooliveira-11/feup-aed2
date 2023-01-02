@@ -172,19 +172,41 @@ void nr_paises_aeroporto(Airport airport1){
     cout << "Existe um total de" << " " << numero_paises.size()
          << " paises diferentes possiveis de alcancar atraves deste aeroporto. \n";
 }
+
+void nr_aeroportos_Maxvoos(Airport airport, int number){
+    Reading reading;
+    Graph voos = reading.readAllFiles();
+    string code = airport.getAirportcode();
+    cout << "E possivel atingir " << voos.countReachableAirports(code, number) << " aeroportos com um maximo de " << number << " voos. \n";
+
+}
+
+void nr_cidades_Maxvoos(Airport airport, int number){
+    Reading reading;
+    Graph voos = reading.readAllFiles();
+    string code = airport.getAirportcode();
+    cout << "E possivel atingir " << voos.countReachableCities(code, number) << " cidades com um maximo de " << number << " voos. \n";
+
+}
+
+void nr_paises_Maxvoos(Airport airport, int number){
+    Reading reading;
+    Graph voos = reading.readAllFiles();
+    string code = airport.getAirportcode();
+    cout << "E possivel atingir " << voos.countReachableCountries(code, number) << " paises com um maximo de " << number << " voos. \n";
+
+}
 void Menu::readmenu() {
 
     Reading reading;
     Graph voos = reading.readAllFiles();
-
 
     bool flag = true, flag2 = true, flag3 = true, flag4 = true;
     string answer;
     string airport_code, departure_airport, arrival_airport;
     char tecla;
     int top_k;
-    //cout << voos.distTwoAirports("OPO","AKF") ;
-    //voos.bfs(17);
+
 
     while(flag){
         cout << "Press a key according to what you want to do: \n"
@@ -235,7 +257,10 @@ void Menu::readmenu() {
                                 "1 : Saber quantos voos existem a partir deste aeroporto. \n"
                                 "2 : Saber o numero de companhias aereas diferentes envolvidas nos voos que partem deste aeroporto. \n"
                                 "3 : Saber o numero de destinos diferentes que este aeroporto alcanca. \n"
-                                "4 : Saber o numero de paises diferentes que este aeroporto alcanca. \n";
+                                "4 : Saber o numero de paises diferentes que este aeroporto alcanca. \n"
+                                "5 : Saber o numero maximo de aeroportos alcancaveis com um numero maximo de n voos. \n"
+                                "6 : Saber o numero maximo de cidades alcancaveis com um numero maximo de n voos. \n"
+                                "7 : Saber o numero maximo de paises alcancaveis com um numero maximo de n voos. \n";
                         cin >> tecla;
                         switch (tecla) {
                             case '1': {
@@ -254,6 +279,24 @@ void Menu::readmenu() {
                                 nr_paises_aeroporto(airport);
                                 break;
                             }
+                            case '5':
+                                int number;
+                                cout << "Inser a number. \n";
+                                cin >> number;
+                                nr_aeroportos_Maxvoos(airport, number);
+                                break;
+                            case '6':
+                                int number1;
+                                cout << "Inser a number. \n";
+                                cin >> number1;
+                                nr_cidades_Maxvoos(airport, number1);
+                                break;
+                            case '7':
+                                int number2;
+                                cout << "Inser a number. \n";
+                                cin >> number2;
+                                nr_paises_Maxvoos(airport, number2);
+                                break;
                             case 'q':
                                 break;
                         }
@@ -312,5 +355,4 @@ void Menu::readmenu() {
                 break;
         }
     }
-
 }

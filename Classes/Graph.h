@@ -27,10 +27,6 @@ class Graph {
     };
     struct AirportHash {
         std::size_t operator()(const Airport& airport) const {
-            /*
-            std::size_t h = 0;
-            h = 37 * h + std::hash<std::string>()(airport.getAirportcode());
-    */
             int v = 0;
             vector<char> chars;
 
@@ -105,6 +101,11 @@ public:
 
     int distTwoAirports(string airpA,string airpB );
 
+    int countReachableAirports(string startAirport, int maxFlights);
+
+    int countReachableCities(string startAirport, int maxFlights);
+
+    int countReachableCountries(string startAirport, int maxFlights);
 
     vector<Node> get_nodes();
 

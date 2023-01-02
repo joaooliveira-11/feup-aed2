@@ -2,6 +2,7 @@
 
 #include <stack>
 #include <queue>
+#include <set>
 #include "Graph.h"
 
 
@@ -214,3 +215,55 @@ int Graph::distTwoAirports(string airpA,string airpB ){
     }
     return (this->nodes[airpB_numCode-1].dist);
 }
+
+
+int Graph::countReachableAirports(string startAirport, int maxFlights) {
+    int count = 0;
+    Airport aux = Airport(startAirport);
+    auto itr = airportTable.find(aux);
+    int pos = itr->getNumCode() - 1;
+    bfs(pos);
+    for(int i = 0; i < nodes.size(); i++){
+        if(nodes[i].dist <= maxFlights && nodes[i].dist >= 1){
+            count++;
+        }
+    }
+    return count;
+}
+
+int Graph::countReachableCities(string startAirport, int maxFlights){
+    set<string> count_cities;
+    Airport aux = Airport(startAirport);
+    auto itr = airportTable.find(aux);
+    int pos = itr->getNumCode() - 1;
+    bfs(pos);
+    for(int i = 0; i < nodes.size(); i++){
+        if(nodes[i].dist <= maxFlights && nodes[i].dist >= 1){
+            Airport airport = Airport(nodes[i].src);
+            auto itr = airportTable.find(airport);
+            count_cities.insert(itr->getAirportcity());
+        }
+    }
+    return count_cities.size();
+}
+
+int Graph::countReachableCountries(string startAirport, int maxFlights){
+    set<string> count_countries;
+    Airport aux = Airport(startAirport);
+    auto itr = airportTable.find(aux);
+    int pos = itr->getNumCode() - 1;
+    bfs(pos);
+    for(int i = 0; i < nodes.size(); i++){
+        if(nodes[i].dist <= maxFlights && nodes[i].dist >= 1){
+            Airport airport = Airport(nodes[i].src);
+            auto itr = airportTable.find(airport);
+            count_countries.insert(itr->getAirportcountry());
+        }
+    }
+}
+
+
+
+
+
+
