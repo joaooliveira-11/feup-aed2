@@ -154,7 +154,12 @@ d, const list<string>& airlines_) {
                             Airport aux = Airport(e.dest);
                             itr_aux = this->airportTable.find(aux);
                             int w = itr_aux->getNumCode() - 1;
-                            if (!nodes[w].visited) {
+                            if(itr_aux->getAirportcode()==d and nodes[w].visited==true){
+                                list<string> aux2 = f_list;
+                                aux2.push_back(e.dest);
+                                q.push(aux2);
+                            }
+                            else if (!nodes[w].visited) {
                                 nodes[w].dist = nodes[pos_aux].dist + 1;
                                 nodes[w].visited = true;
                                 list<string> aux2 = f_list;
@@ -197,7 +202,12 @@ d) {
                 Airport aux = Airport(e.dest);
                 itr_aux = this->airportTable.find(aux);
                 int w = itr_aux->getNumCode() - 1;
-                if (!nodes[w].visited) {
+                if(itr_aux->getAirportcode()==d and nodes[w].visited==true){
+                    list<string> aux2 = f_list;
+                    aux2.push_back(e.dest);
+                    q.push(aux2);
+                }
+                else if (!nodes[w].visited) {
                     nodes[w].dist = nodes[pos_aux].dist + 1;
                     nodes[w].visited = true;
                     list<string> aux2 = f_list;
@@ -255,6 +265,7 @@ int Graph::distTwoAirports(const string& airpA,const string& airpB){
                 }
                 flag_aux++;
             }
+            cout<<"________________________________________" <<endl;
         }
     }
     if(this->nodes[airpB_numCode-1].dist==-1){
@@ -264,7 +275,7 @@ int Graph::distTwoAirports(const string& airpA,const string& airpB){
 }
 
 
-int Graph::distTwoAirportsAirlineRest(const string& airpA,const string& airpB, const list<string>& airlines ){
+int Graph::distTwoAirportsAirlineRest(string airpA,string airpB, list<string> airlines ){
     if ( airpA==airpB){
         return 0;
     }
@@ -280,11 +291,10 @@ int Graph::distTwoAirportsAirlineRest(const string& airpA,const string& airpB, c
     this->bfs(airpA_numCode);
     list<list<string>> aux = this-> distTwoAiportsWithRest_bfs(airpA, airpB, airlines);
     int tamanho = this->nodes[airpB_numCode-1].dist;
-    for ( const auto& a : aux){
-        //if(a.size()==tamanho+1){
+    for ( auto a : aux){
+        if(a.size()==tamanho+1){
             int flag_aux = 0;
-            for(const auto&
-            x : a ){
+            for(auto x : a ){
                 Airport aux = Airport(x);
                 std::unordered_set<Airport>::const_iterator itr_aux  =this->airportTable.find(aux);
                 string nome_to_print = itr_aux->getAirportname();
@@ -303,7 +313,7 @@ int Graph::distTwoAirportsAirlineRest(const string& airpA,const string& airpB, c
                     cout << nome_to_print << " --> ";
                 }
                 flag_aux++;
-           // }
+            }
         }
     }
     return (this->nodes[airpB_numCode-1].dist);
