@@ -1,19 +1,14 @@
-
-
-#include <stack>
 #include <queue>
 #include <set>
 #include "Graph.h"
 
+Graph::Graph(int num, bool dir) : n(num), hasDir(dir), nodes(num+1) {}
 
-Graph::Graph(int num, bool dir) : n(num), hasDir(dir), nodes(num+1) {
-}
-
-void Graph::insertAirport_intotable(Airport airport){
+void Graph::insertAirport_intotable(const Airport& airport){
     this->airportTable.insert(airport);
 }
 
-void Graph::insertAirline_intotable(Airline airline){
+void Graph::insertAirline_intotable(const Airline& airline){
     this->airlineTable.insert(airline);
 }
 void Graph::set_airportTable(unordered_set<Airport, AirportHash, AirportEqual> airportTable1){
@@ -21,22 +16,22 @@ void Graph::set_airportTable(unordered_set<Airport, AirportHash, AirportEqual> a
 }
 
 void Graph::set_airlineTable(std::unordered_set<Airline, AirlineHash, AirlineEqual> airlineTable1){
-    this->airlineTable = airlineTable1;
+    this->airlineTable =airlineTable1;
 }
 
-int Graph::get_airportTable_size(){
+int Graph::get_airportTable_size() const{
     return this->airportTable.size();
 }
 
-int Graph::get_airlineTable_size(){
-    this->airlineTable.size();
+int Graph::get_airlineTable_size() const{
+    return this->airlineTable.size();
 }
 
-vector<Graph::Node> Graph::get_nodes(){
+vector<Graph::Node> Graph::get_nodes() const{
     return this->nodes;
 }
 
-void Graph::addEdge(string src, string dest, string company, int pos){
+void Graph::addEdge(string src, const string& dest, const string& company, int pos){
     nodes[pos].src=src;
     bool flag = true;
     for(auto &edge : nodes[pos].adj){
@@ -55,10 +50,10 @@ void Graph::addEdge(string src, string dest, string company, int pos){
 
 void Graph::verNodes(){
     int count = 1;
-    for (int i=0;i<nodes.size();i++){
-        for(auto x : nodes[i].adj){
-            for(auto y:x.company){
-                cout << nodes[i].src << " | "
+    for (auto & node : nodes){
+        for(const auto& x : node.adj){
+            for(const auto& y:x.company){
+                cout << node.src << " | "
                      << y << " | "
                      << x.dest << " | "
                      << count <<endl;
@@ -91,7 +86,7 @@ int Graph::bfs_max_distance(int a) {
     int max_dist = 0;
     while (!q.empty()) {
         int u = q.front(); q.pop();
-        for (auto e : nodes[u].adj) {
+        for (const auto& e : nodes[u].adj) {
             Airport aux = Airport(e.dest);
             std::unordered_set<Airport>::const_iterator itr_aux = this->airportTable.find(aux);
             int w = itr_aux->getNumCode()-1;
@@ -129,7 +124,9 @@ void Graph::bfs(int v) {
     }
 }
 
-list<list<string>> Graph::distTwoAiportsWithRest_bfs(string v, string d, list<string> airlines_) {
+list<list<string>> Graph::distTwoAiportsWithRest_bfs(const string&
+v, const string&
+d, const list<string>& airlines_) {
     list<list<string>> res;
     this->setFalse();
     queue<list<string>> q; // queue of unvisited nodes
@@ -145,18 +142,17 @@ list<list<string>> Graph::distTwoAiportsWithRest_bfs(string v, string d, list<st
         list<string> f_list = q.front();
         q.pop();
         string u = f_list.back();
-        Airport aux1 = Airport(u);
-        std::unordered_set<Airport>::const_iterator itr_aux =this->airportTable.find(aux1);
+        aux1 = Airport(u);
+        auto itr_aux = this->airportTable.find(aux1);
         int pos_aux = itr_aux->getNumCode()-1;
-        if (u == d) {
-            res.push_back(f_list);
-        } else {
+        if (u == d) res.push_back(f_list);
+        else {
             for (auto &e: nodes[pos_aux].adj) {
-                for(auto x : airlines_){
-                    for(auto y: e.company){
+                for(const auto& x : airlines_){
+                    for(const auto& y: e.company){
                         if(x==y){
                             Airport aux = Airport(e.dest);
-                            std::unordered_set<Airport>::const_iterator itr_aux = this->airportTable.find(aux);
+                            itr_aux = this->airportTable.find(aux);
                             int w = itr_aux->getNumCode() - 1;
                             if (!nodes[w].visited) {
                                 nodes[w].dist = nodes[pos_aux].dist + 1;
@@ -174,7 +170,8 @@ list<list<string>> Graph::distTwoAiportsWithRest_bfs(string v, string d, list<st
     return res;
 }
 
-list<list<string>> Graph::distTwoAiports_bfs(string v, string d) {
+list<list<string>> Graph::distTwoAiports_bfs(const string& v, const string&
+d) {
     list<list<string>> res;
     this->setFalse();
     queue<list<string>> q; // queue of unvisited nodes
@@ -190,15 +187,15 @@ list<list<string>> Graph::distTwoAiports_bfs(string v, string d) {
         list<string> f_list = q.front();
         q.pop();
         string u = f_list.back();
-        Airport aux1 = Airport(u);
-        std::unordered_set<Airport>::const_iterator itr_aux =this->airportTable.find(aux1);
+        aux1 = Airport(u);
+        auto itr_aux =this->airportTable.find(aux1);
         int pos_aux = itr_aux->getNumCode()-1;
         if (u == d) {
             res.push_back(f_list);
         } else {
             for (auto &e: nodes[pos_aux].adj) {
                 Airport aux = Airport(e.dest);
-                std::unordered_set<Airport>::const_iterator itr_aux = this->airportTable.find(aux);
+                itr_aux = this->airportTable.find(aux);
                 int w = itr_aux->getNumCode() - 1;
                 if (!nodes[w].visited) {
                     nodes[w].dist = nodes[pos_aux].dist + 1;
@@ -218,15 +215,17 @@ ret = 0 -> mesmo aeroporto
 ret =-1 -> não é possível chegar ao aeroporto
 ret =-2 -> um dos aeroportos não existe
  */
-int Graph::distTwoAirports(string airpA,string airpB){
-    if ( airpA==airpB){
+int Graph::distTwoAirports(const string& airpA,const string& airpB){
+    if (airpA==airpB){
+        cout << "Escreveu o mesmo codigo para os aeroportos de partida e chegada. \n"
+                "Para ver as melhores rotas tente dois codigos distintos. \n";
         return 0;
     }
     Airport aux1 = Airport(airpA);
     std::unordered_set<Airport>::const_iterator itr_airpA =this->airportTable.find(aux1);
     Airport aux2 = Airport(airpB);
     std::unordered_set<Airport>::const_iterator itr_airpB  =this->airportTable.find(aux2);
-    if( itr_airpA==this->airportTable.end() or itr_airpB==this->airportTable.end() ){
+    if(itr_airpA==this->airportTable.end() or itr_airpB==this->airportTable.end()){
         return -2;
     }
     int airpA_numCode = itr_airpA->getNumCode();
@@ -234,16 +233,15 @@ int Graph::distTwoAirports(string airpA,string airpB){
     this->bfs(airpA_numCode);
     list<list<string>> aux = this->distTwoAiports_bfs(airpA, airpB);
     int tamanho = this->nodes[airpB_numCode-1].dist;
-    for ( auto a : aux){
+    for ( const auto& a : aux){
         if(a.size()==tamanho+1){
             int flag_aux = 0;
-            for(auto x : a ){
+            for(const auto& x : a ){
                 Airport aux = Airport(x);
                 std::unordered_set<Airport>::const_iterator itr_aux  =this->airportTable.find(aux);
                 string nome_to_print = itr_aux->getAirportname();
                 nome_to_print += ", ";
                 nome_to_print += itr_aux->getAirportcountry();
-
                 if(x==airpB){
                     cout << nome_to_print <<endl;
                     continue;
@@ -252,18 +250,21 @@ int Graph::distTwoAirports(string airpA,string airpB){
                     cout << nome_to_print << " --> ";
                 }
                 else{
-                    cout << nome_to_print <<endl;
+                    cout << nome_to_print << endl;
                     cout << nome_to_print << " --> ";
                 }
                 flag_aux++;
             }
         }
     }
+    if(this->nodes[airpB_numCode-1].dist==-1){
+        cout << "Nao existe forma de chegar de um aeroporto ao outro.\n";
+    }
     return (this->nodes[airpB_numCode-1].dist);
 }
 
 
-int Graph::distTwoAirportsAirlineRest(string airpA,string airpB, list<string> airlines ){
+int Graph::distTwoAirportsAirlineRest(const string& airpA,const string& airpB, const list<string>& airlines ){
     if ( airpA==airpB){
         return 0;
     }
@@ -279,10 +280,11 @@ int Graph::distTwoAirportsAirlineRest(string airpA,string airpB, list<string> ai
     this->bfs(airpA_numCode);
     list<list<string>> aux = this-> distTwoAiportsWithRest_bfs(airpA, airpB, airlines);
     int tamanho = this->nodes[airpB_numCode-1].dist;
-    for ( auto a : aux){
+    for ( const auto& a : aux){
         //if(a.size()==tamanho+1){
             int flag_aux = 0;
-            for(auto x : a ){
+            for(const auto&
+            x : a ){
                 Airport aux = Airport(x);
                 std::unordered_set<Airport>::const_iterator itr_aux  =this->airportTable.find(aux);
                 string nome_to_print = itr_aux->getAirportname();
@@ -313,8 +315,8 @@ int Graph::countReachableAirports(string startAirport, int maxFlights) {
     auto itr = airportTable.find(aux);
     int pos = itr->getNumCode() - 1;
     bfs(pos);
-    for(int i = 0; i < nodes.size(); i++){
-        if(nodes[i].dist <= maxFlights && nodes[i].dist >= 1){
+    for(auto & node : nodes){
+        if(node.dist <= maxFlights && node.dist >= 1){
             count++;
         }
     }
@@ -343,13 +345,14 @@ int Graph::countReachableCountries(string startAirport, int maxFlights){
     auto itr = airportTable.find(aux);
     int pos = itr->getNumCode() - 1;
     bfs(pos);
-    for(int i = 0; i < nodes.size(); i++){
-        if(nodes[i].dist <= maxFlights && nodes[i].dist >= 1){
-            Airport airport = Airport(nodes[i].src);
+    for(auto & node : nodes){
+        if(node.dist <= maxFlights && node.dist >= 1){
+            Airport airport = Airport(node.src);
             auto itr = airportTable.find(airport);
             count_countries.insert(itr->getAirportcountry());
         }
     }
+    return 0;
 }
 
 

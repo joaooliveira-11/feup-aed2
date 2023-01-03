@@ -11,11 +11,8 @@
 #include "Graph.h"
 
 class Reading {
-private:
-
-public:
-
-    Graph readAllFiles();
+    public:
+        static Graph readAllFiles();
 };
 
 #endif

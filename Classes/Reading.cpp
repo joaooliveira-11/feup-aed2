@@ -32,8 +32,7 @@ Graph Reading::readAllFiles(){
         aux.insertAirline_intotable(airline1);
     }
 
-    int verify2 = 0;
-    int count = 1;
+    int verify2 = 0, count = 1;
     string AIRPORT_CODE, AIRPORT_NAME, CITY, AIRPORT_COUNTRY;
     float LATITUDE, LONGITUDE;
     char c;
@@ -57,8 +56,6 @@ Graph Reading::readAllFiles(){
         aux.insertAirport_intotable(airport1);
         count++;
     }
-
-
 
     int verify3 = 0;
     vector<Flight> flights;
