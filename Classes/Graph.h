@@ -27,12 +27,17 @@ class Graph {
     };
     struct AirportHash {
         std::size_t operator()(const Airport& airport) const {
+            size_t h = 0;
+            /*
             vector<char> chars;
             for(auto c : airport.getAirportcode()){
                 chars.push_back(c);
             }
             char first = chars[0], second = chars[1], third = chars[2];
             return first + second*'A' + third*'A'*'A';
+             */
+            h = 37 * hash<string>()(airport.getAirportcode());
+            return h;
         }
     };
 

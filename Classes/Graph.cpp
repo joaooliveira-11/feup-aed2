@@ -275,7 +275,7 @@ int Graph::distTwoAirports(const string& airpA,const string& airpB){
 }
 
 
-int Graph::distTwoAirportsAirlineRest(string airpA,string airpB, list<string> airlines ){
+int Graph::distTwoAirportsAirlineRest(const string& airpA,const string& airpB, const list<string>& airlines){
     if ( airpA==airpB){
         return 0;
     }
@@ -343,7 +343,7 @@ int Graph::countReachableCities(string startAirport, int maxFlights){
         if(nodes[i].dist <= maxFlights && nodes[i].dist >= 1){
             Airport airport = Airport(nodes[i].src);
             auto itr = airportTable.find(airport);
-            count_cities.insert(itr->getAirportcity());
+            if(itr != airportTable.end())count_cities.insert(itr->getAirportcity());
         }
     }
     return count_cities.size();
@@ -359,10 +359,10 @@ int Graph::countReachableCountries(string startAirport, int maxFlights){
         if(node.dist <= maxFlights && node.dist >= 1){
             Airport airport = Airport(node.src);
             auto itr = airportTable.find(airport);
-            count_countries.insert(itr->getAirportcountry());
+            if(itr != airportTable.end())count_countries.insert(itr->getAirportcountry());
         }
     }
-    return 0;
+    return count_countries.size();
 }
 
 

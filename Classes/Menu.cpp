@@ -4,28 +4,28 @@
 #include "Flight.h"
 #include "Menu.h"
 
-void rede_nrVoos(){
+void rede_nrVoos() {
     Graph voos = Reading::readAllFiles();
     int count = 0;
-    for(auto & node : voos.nodes){
-        for(const auto& el : node.adj){
+    for (auto &node: voos.nodes) {
+        for (const auto &el: node.adj) {
             count += el.company.size();
         }
     }
     cout << "Esta rede tem um total de " << count << " voos. \n";
 }
 
-void rede_nrAeroportos(){
+void rede_nrAeroportos() {
     Graph voos = Reading::readAllFiles();
     cout << "Esta rede tem um total de " << voos.airportTable.size() << " aeroportos.\n";
 }
 
-void rede_nrCompanhias(){
+void rede_nrCompanhias() {
     Graph voos = Reading::readAllFiles();
     cout << "Esta rede tem um total de " << voos.airlineTable.size() << " companhias. \n";
 }
 
-void rede_diametro(){
+void rede_diametro() {
     Graph voos = Reading::readAllFiles();
     int max = 0;
     voos.nodes[0].visited = true;
@@ -36,97 +36,98 @@ void rede_diametro(){
     cout << "Esta rede tem um diametro igual a " << max << ". \n \n";
 }
 
-void pais_nrAeroportos(const string& pais){
+void pais_nrAeroportos(const string &pais) {
     Graph voos = Reading::readAllFiles();
     int count = 0;
-    for(const auto & itr : voos.airportTable){
-        if(itr.getAirportcountry() == pais) count++;
+    for (const auto &itr: voos.airportTable) {
+        if (itr.getAirportcountry() == pais) count++;
     }
-    if(count == 0) cout << "Este pais nao tem nenhum aeroporto ou nao existe na nossa base dados. \n";
+    if (count == 0) cout << "Este pais nao tem nenhum aeroporto ou nao existe na nossa base dados. \n";
     else cout << "Este pais tem um total de " << count << " aeroportos. \n";
 }
 
-void pais_nrVoos(const string& country){
+void pais_nrVoos(const string &country) {
     Graph voos = Reading::readAllFiles();
     int count = 0;
-    for(const auto& airport : voos.airportTable){
-        if(airport.getAirportcountry() == country){
-            for (const auto& el: voos.nodes[airport.getNumCode() - 1].adj) {
+    for (const auto &airport: voos.airportTable) {
+        if (airport.getAirportcountry() == country) {
+            for (const auto &el: voos.nodes[airport.getNumCode() - 1].adj) {
                 count += el.company.size();
             }
         }
     }
-    if(count == 0) cout << "Este pais nao tem nenhum voo ou nao existe na nossa base dados. \n";
+    if (count == 0) cout << "Este pais nao tem nenhum voo ou nao existe na nossa base dados. \n";
     else cout << "Este pais tem um total de " << count << " voos. \n";
 }
 
-void pais_nrCompanhias(const string& country){
+void pais_nrCompanhias(const string &country) {
     Graph voos = Reading::readAllFiles();
     int count = 0;
-    for(const auto& airline : voos.airlineTable){
-       if(airline.getAirlinecountry() == country) count++;
+    for (const auto &airline: voos.airlineTable) {
+        if (airline.getAirlinecountry() == country) count++;
     }
-    if(count == 0) cout << "Este pais nao tem nenhuma companhia ou nao existe na nossa base dados. \n \n";
+    if (count == 0) cout << "Este pais nao tem nenhuma companhia ou nao existe na nossa base dados. \n \n";
     else cout << "Este pais tem um total de " << count << " companhias. \n \n";
 }
 
-void companhia_nrVoos(const string& airline1){
+void companhia_nrVoos(const string &airline1) {
     Graph voos = Reading::readAllFiles();
     int count = 0;
-    for(auto & node : voos.nodes){
-        for(const auto& el : node.adj){
-            for(const auto& airline : el.company) if(airline == airline1) count++;
+    for (auto &node: voos.nodes) {
+        for (const auto &el: node.adj) {
+            for (const auto &airline: el.company) if (airline == airline1) count++;
         }
     }
-    if(count == 0) cout << "Esta companhia nao tem nenhum voo ou nao existe na nossa base dados. \n";
+    if (count == 0) cout << "Esta companhia nao tem nenhum voo ou nao existe na nossa base dados. \n";
     else cout << "Esta companhia tem um total de " << count << " voos. \n";
 }
 
-void companhia_nrAeroportos(const string& airline1){
+void companhia_nrAeroportos(const string &airline1) {
     Graph voos = Reading::readAllFiles();
-    set<string>air_ports;
-    for(auto & node : voos.nodes){
-        for(const auto& el : node.adj){
-            for(const auto& airline : el.company){
-                if(airline == airline1){
+    set<string> air_ports;
+    for (auto &node: voos.nodes) {
+        for (const auto &el: node.adj) {
+            for (const auto &airline: el.company) {
+                if (airline == airline1) {
                     air_ports.insert(el.dest);
                     air_ports.insert(node.src);
                 }
             }
         }
     }
-    if(air_ports.empty()) cout << "Esta companhia nao faz ligacao entre nenhum aeroporto ou nao existe na nossa base dados. \n \n";
+    if (air_ports.empty())
+        cout << "Esta companhia nao faz ligacao entre nenhum aeroporto ou nao existe na nossa base dados. \n \n";
     else cout << "Esta companhia faz ligacao entre " << air_ports.size() << " aeroportos. \n \n";
 }
 
-void aeroporto_nrVoos(const Airport& airport1){
+void aeroporto_nrVoos(const Airport &airport1) {
     Graph voos = Reading::readAllFiles();
     auto itr = voos.airportTable.find(airport1);
     int number_voos = 0;
-    for (const auto& el: voos.nodes[itr->getNumCode() - 1].adj) {
+    for (const auto &el: voos.nodes[itr->getNumCode() - 1].adj) {
         number_voos += el.company.size();
     }
     cout << "Existe um total de " << number_voos << " voos a partir deste aeroporto. \n \n";
 }
 
-void nrCompanhias_voos_Airport(const Airport& airport1){
+void nrCompanhias_voos_Airport(const Airport &airport1) {
     Graph voos = Reading::readAllFiles();
     auto itr = voos.airportTable.find(airport1);
     set<string> airlines_names;
-    for (const auto& el: voos.nodes[itr->getNumCode() - 1].adj) {
-        for (const string& airline_code: el.company) {
+    for (const auto &el: voos.nodes[itr->getNumCode() - 1].adj) {
+        for (const string &airline_code: el.company) {
             airlines_names.insert(airline_code);
         }
     }
     cout << "Existe um total de " << airlines_names.size()
          << " companhias aereas diferentes envolvidas nos voos que partem deste aeroporto. \n";
     cout << "As companhias envolvidas sao as seguintes: \n";
-    for (const string& airline_code: airlines_names)
+    for (const string &airline_code: airlines_names)
         cout << airline_code << endl;
     cout << endl;
 }
 
-void nr_destinos_aeroporto(const Airport& airport1){
+void nr_destinos_aeroporto(const Airport &airport1) {
     Graph voos = Reading::readAllFiles();
     auto itr = voos.airportTable.find(airport1);
     int numero_destinos = 0;
@@ -135,12 +136,12 @@ void nr_destinos_aeroporto(const Airport& airport1){
          << " aeroportos/destinos diferentes possiveis de atingir partindo deste aeroporto. \n \n";
 }
 
-void nr_paises_aeroporto(const Airport& airport1){
+void nr_paises_aeroporto(const Airport &airport1) {
     Graph voos = Reading::readAllFiles();
     set<string> numero_paises;
     auto itr = voos.airportTable.find(airport1);
     string country = itr->getAirportcountry();
-    for (const auto& el: voos.nodes[itr->getNumCode() - 1].adj) {
+    for (const auto &el: voos.nodes[itr->getNumCode() - 1].adj) {
         Airport aux = Airport(el.dest);
         itr = voos.airportTable.find(aux);
         string country_aux = itr->getAirportcountry();
@@ -150,22 +151,75 @@ void nr_paises_aeroporto(const Airport& airport1){
          << " paises diferentes possiveis de atingir partindo deste aeroporto. \n \n";
 }
 
-void nr_aeroportos_Maxvoos(const Airport& airport, int number){
+void nr_aeroportos_Maxvoos(const Airport &airport, int number) {
     Graph voos = Reading::readAllFiles();
     string code = airport.getAirportcode();
-    cout << voos.countReachableAirports(code, number) << " aeroportos sao atingiveis com um maximo de " << number << " voos. \n \n";
+    cout << voos.countReachableAirports(code, number) << " aeroportos sao atingiveis com um maximo de " << number
+         << " voos. \n \n";
 }
 
-void nr_cidades_Maxvoos(const Airport& airport, int number){
+void nr_cidades_Maxvoos(const Airport &airport, int number) {
     Graph voos = Reading::readAllFiles();
     string code = airport.getAirportcode();
-    cout << voos.countReachableCities(code, number) << " cidades sao atingiveis com um maximo de " << number << " voos. \n \n";
+    cout << voos.countReachableCities(code, number) << " cidades sao atingiveis com um maximo de " << number
+         << " voos. \n \n";
 }
 
-void nr_paises_Maxvoos(const Airport& airport, int number){
+void nr_paises_Maxvoos(const Airport &airport, int number) {
     Graph voos = Reading::readAllFiles();
     string code = airport.getAirportcode();
-    cout << voos.countReachableCountries(code, number) << " paises sao atingiveis com um maximo de " << number << " voos. \n \n";
+    cout << voos.countReachableCountries(code, number) << " paises sao atingiveis com um maximo de " << number
+         << " voos. \n \n";
+}
+
+struct Compare_Pair {
+    bool operator()(const pair<string, int> &a, const pair<string, int> &b) {
+        return a.second > b.second;
+    }
+};
+
+void rede_top_k_aeroportos_voos(int k) {
+    Graph voos = Reading::readAllFiles();
+    set<pair<string, int>, Compare_Pair> topk;
+    for (auto it = voos.nodes.begin(); it != voos.nodes.end(); ++it) {
+        int number_voos = 0;
+        for (const auto &el: it->adj) {
+            number_voos += el.company.size();
+        }
+        pair<string, int> pair = make_pair(it->src, number_voos);
+        topk.insert(pair);
+    }
+    cout << "Os " << k << " aeroportos com mais voos sao os seguintes:\n";
+    int count = 0;
+    for (auto itr = topk.begin(); itr != topk.end(); itr++) {
+        if (count != k) {
+            cout << itr->first << " com" << itr->second << " voos.\n";
+            count++;
+        } else break;
+    }
+}
+
+void rede_top_k_aeroportos_companhias(int k) {
+    Graph voos = Reading::readAllFiles();
+    set<pair<string, int>, Compare_Pair> topk;
+    for (auto it = voos.nodes.begin(); it != voos.nodes.end(); ++it) {
+        set<string> airlines_names;
+        for (const auto &el: it->adj) {
+            for (const string &airline_code: el.company) {
+                airlines_names.insert(airline_code);
+            }
+        }
+        pair<string, int> pair = make_pair(it->src, airlines_names.size());
+        topk.insert(pair);
+    }
+    cout << "Os " << k << " aeroportos com mais companhias sao os seguintes:\n";
+    int count = 0;
+    for (auto itr = topk.begin(); itr != topk.end(); itr++) {
+        if (count != k) {
+            cout << itr->first << " com" << itr->second << " companhias.\n";
+            count++;
+        } else break;
+    }
 }
 
 void Menu::readmenu() {
@@ -175,14 +229,14 @@ void Menu::readmenu() {
     char tecla;
     int top_k;
 
-    while(flag){
+    while (flag) {
         cout << "Insira uma tecla de acordo com o que pretende fazer:\n"
                 "1 : Saber qual a melhor maneira de voar de um local para o outro. (Local = aeroporto) \n"
                 "2 : Obter informaoes acerca de um aeroporto. \n"
                 "3 : Ver as estatisticas globais de uma rede. \n"
                 "q : Quit. \n";
         cin >> tecla;
-        switch(tecla){
+        switch (tecla) {
             case '1': {
                 cout << "\nInsira o codigo IATA do aeroporto de partida. (ex.: CDG)\n";
                 cin >> departure_airport;
@@ -282,32 +336,28 @@ void Menu::readmenu() {
                         rede_nrAeroportos();
                         rede_nrVoos();
                         rede_nrCompanhias();
-                        rede_diametro();  // colocar a opcao de quer saber o diametro? porque demora muito tempo uma pesquisa em largura com 69k dados
-                        // falta top k
+                        //rede_diametro();  // colocar a opcao de quer saber o diametro? porque demora muito tempo uma pesquisa em largura com 69k dados
+                        rede_top_k_aeroportos_voos(top_k);
+                        rede_top_k_aeroportos_companhias(top_k);
                         break;
                     case '2': {
                         string country;
                         cout << "Escreva o nome do pais. (ex.: Spain) \n";
                         cin >> country;
-                        cout << "Insira o valor de k para o top-k de aeroportos com mais voos e/ou companhias. \n";
-                        cin >> top_k;
                         pais_nrAeroportos(country);
                         pais_nrVoos(country);
-                        pais_nrCompanhias(country);  // perguntar ao prof se é o numero de companhias areas envolvidas em voos
+                        pais_nrCompanhias(
+                                country);  // perguntar ao prof se é o numero de companhias areas envolvidas em voos
                         // que saem de areportos portugueses
                         // ou de fundação portuguesa no ficheiro airlines (exemplo portugal)
-                        // falta top k
                         break;
                     }
                     case '3': {
                         string airline;
                         cout << "Insira o codigo ICAO da companhia aerea. (ex.: AAL) \n";
                         cin >> airline;
-                        cout << "Insira o valor de k para o top-k de aeroportos com mais voos e/ou companhias. \n";
-                        cin >> top_k;
                         companhia_nrVoos(airline);
                         companhia_nrAeroportos(airline);
-                        // falta top k
                         break;
                     }
                     case 'q':
