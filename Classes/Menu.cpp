@@ -246,7 +246,11 @@ void Menu::readmenu() {
     string answer, airport_code, departure_airport, arrival_airport;
     char tecla;
     int top_k;
-
+/*
+    pair<string,string> c1("Porto","Portugal");
+    pair<string,string> c2("New York","United States");
+    voos.distTwoCities_bfs(c1,c2);
+    */
     while (flag) {
         cout << "Insira uma tecla de acordo com o que pretende fazer:\n"
                 "1 : Saber qual a melhor maneira de voar de um local para o outro. (Local = aeroporto) \n"

@@ -110,6 +110,8 @@ public:
 
     list<list<string>> distTwoAiportsWithRest_bfs(const string& v, const string& d, const list<string>& airlines);
 
+    void distTwoCities_bfs(const pair<string,string> city1, const pair<string,string> city2);
+
     int countReachableAirports(string startAirport, int maxFlights);
 
     int countReachableCities(string startAirport, int maxFlights);
