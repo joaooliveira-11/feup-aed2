@@ -18,7 +18,7 @@ private:
 public:
     Airport(string airport_code1, string airport_name1, string city, string airport_country1, float latitude1, float longitude1, int numCode);
     Airport();
-    Airport(string code);
+    explicit Airport(string code);
     string getAirportcode() const;
     string getAirportname() const;
     string getAirportcity() const;

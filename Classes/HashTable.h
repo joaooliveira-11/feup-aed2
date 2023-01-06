@@ -13,7 +13,7 @@ private:
     struct HashEntry {
         T element;
         EntryType info;
-        HashEntry(const T& e = T(), EntryType i = EMPTY) : element(e), info(i) {}
+        explicit HashEntry(const T& e = T(), EntryType i = EMPTY) : element(e), info(i) {}
     };
 
     vector<HashEntry> array;
