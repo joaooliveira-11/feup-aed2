@@ -365,6 +365,36 @@ int Graph::countReachableCountries(string startAirport, int maxFlights){
     return count_countries.size();
 }
 
+void Graph::dfs_articulation_points(int v, int &order, list<string>& points) {
+    nodes[v].visited = true;
+    nodes[v].num = nodes[v].low = order++;
+
+    int children = 0;
+    bool articulation = false;
+
+    for (auto e : nodes[v].adj) {
+        Airport aux = Airport(e.dest);
+        auto itr_aux = this->airportTable.find(aux);
+        int w;
+        if(itr_aux != airportTable.end()) w = itr_aux->getNumCode()-1;
+        if (!nodes[w].visited) {
+            children++;
+            dfs_articulation_points(w, order, points);
+            nodes[v].low = min(nodes[v].low, nodes[w].low);
+            if (nodes[w].low >= nodes[v].num) articulation = true;
+        }
+        else
+            nodes[v].low = min(nodes[v].low, nodes[w].num);
+    }
+
+    if ((nodes[v].num == 1 && children > 1) || (nodes[v].num > 1 && articulation)) {
+        Airport airport = Airport(nodes[v].src);
+        auto itr = airportTable.find(airport);
+        if(itr != airportTable.end()) points.push_front(itr->getAirportcode());
+    }
+}
+
+
 
 
 

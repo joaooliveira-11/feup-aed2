@@ -23,7 +23,8 @@ class Graph {
         list<Edge> adj;
         bool visited;   // As the node been visited on a search?
         int dist;
-
+        int low;
+        int num;
     };
     struct AirportHash {
         std::size_t operator()(const Airport& airport) const {
@@ -96,6 +97,8 @@ public:
     void resetDist();
 
     void bfs(int v);
+
+    void dfs_articulation_points(int v, int &order, list<string>& points);
 
     list<list<string>> distTwoAiports_bfs(const string& v, const string& d);
 

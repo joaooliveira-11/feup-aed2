@@ -222,6 +222,24 @@ void rede_top_k_aeroportos_companhias(int k) {
     }
 }
 
+void Articulated_points(){
+    Graph voos = Reading::readAllFiles();
+    list<string> list;
+    for (auto &node : voos.nodes) {
+        node.visited = false;
+        node.low = 0;
+        node.num = 0;
+    }
+
+    int order = 0;
+    for (int v = 0; v < voos.nodes.size(); v++)
+        if (!voos.nodes[v].visited)
+            voos.dfs_articulation_points(v, order, list);
+
+    list.sort();
+    for(auto el : list) cout << el << endl;
+}
+
 void Menu::readmenu() {
     Graph voos = Reading::readAllFiles();
     bool flag = true;
