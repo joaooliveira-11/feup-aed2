@@ -139,26 +139,27 @@ public:
     ///@returns
     int bfs_max_distance(int a);
 
-    ///@brief
+    ///@brief function to calculate the distance between two airports
     ///@param airpA
     ///@param airpB
-    ///@returns
+    ///@returns distance between the aiports
     int distTwoAirports(const string& airpA,const string& airpB);
 
-    ///@brief
+    ///@brief function to calculate the distance between two airports using only certain airlines
     ///@param airpA
     ///@param airpB
     ///@param airlines
-    ///@returns
+    ///@returns distance between the aiports with airlines restrictions
     int distTwoAirportsAirlineRest(const string& airpA,const string& airpB, const list<string>& airlines );
 
-    ///@brief
+    ///@brief function to determinate diferent paths between two airports using only certain airlines
     ///@param v
     ///@param d
     ///@param airlines
+    ///@returns lists with different paths from airport v to airport d with airlines restrictions
     list<list<string>> distTwoAiportsWithRest_bfs(const string& v, const string& d, const list<string>& airlines);
 
-    ///@brief
+    ///@brief function do calculate the shortest path between two cities and print it
     ///@param city1
     ///@param city2
     void distTwoCities_bfs(const pair<string,string> city1, const pair<string,string> city2);
@@ -192,6 +193,8 @@ public:
 
     ///@brief Unordered_set with Airline objects
     std::unordered_set<Airline, AirlineHash, AirlineEqual> airlineTable;
+
+    void distTwoCoordinates_bfs(const pair<float,float> coord1, const pair<float,float> coord2, float distMax);
 };
 
 #endif
