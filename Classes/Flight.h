@@ -5,13 +5,22 @@ using namespace std;
 
 class Flight {
 private:
-    string source;
-    string target;
-    string airline;
+    ///@brief The Flight´s source, target, airline
+    string source, target, airline;
 public:
+    ///@brief Constructor of new Flight given it´s Flight source, target and airline
     Flight(string source1 , string target1, string airline1);
+
+    ///@brief Getter for the Flight´s source Airport.
+    ///@returns A Flight´s source.
     string getFlightsource() ;
+
+    ///@brief Getter for the Flight´s target Airport.
+    ///@returns A Flight´s target.
     string getFlighttarget() ;
+
+    ///@brief Getter for the Flight´s airline.
+    ///@returns A Flight´s airline.
     string getFlightairline();
 };
 

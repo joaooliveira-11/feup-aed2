@@ -4,7 +4,7 @@
 #include "Flight.h"
 #include "Menu.h"
 
-void rede_nrVoos() {
+void Menu::rede_nrVoos() {
     Graph voos = Reading::readAllFiles();
     int count = 0;
     for (auto &node: voos.nodes) {
@@ -15,17 +15,17 @@ void rede_nrVoos() {
     cout << "Esta rede tem um total de " << count << " voos. \n";
 }
 
-void rede_nrAeroportos() {
+void Menu::rede_nrAeroportos() {
     Graph voos = Reading::readAllFiles();
     cout << "Esta rede tem um total de " << voos.airportTable.size() << " aeroportos.\n";
 }
 
-void rede_nrCompanhias() {
+void Menu::rede_nrCompanhias() {
     Graph voos = Reading::readAllFiles();
     cout << "Esta rede tem um total de " << voos.airlineTable.size() << " companhias. \n";
 }
 
-void rede_diametro() {
+void Menu::rede_diametro() {
     Graph voos = Reading::readAllFiles();
     int max = 0;
     voos.nodes[0].visited = true;
@@ -36,7 +36,7 @@ void rede_diametro() {
     cout << "Esta rede tem um diametro igual a " << max << ". \n \n";
 }
 
-void pais_nrAeroportos(const string &pais) {
+void Menu::pais_nrAeroportos(const string &pais) {
     Graph voos = Reading::readAllFiles();
     int count = 0;
     for (const auto &itr: voos.airportTable) {
@@ -46,7 +46,7 @@ void pais_nrAeroportos(const string &pais) {
     else cout << "Este pais tem um total de " << count << " aeroportos. \n";
 }
 
-void pais_nrVoos(const string &country) {
+void Menu::pais_nrVoos(const string &country) {
     Graph voos = Reading::readAllFiles();
     int count = 0;
     for (const auto &airport: voos.airportTable) {
@@ -60,7 +60,7 @@ void pais_nrVoos(const string &country) {
     else cout << "Este pais tem um total de " << count << " voos. \n";
 }
 
-void pais_nrCompanhias(const string &country) {
+void Menu::pais_nrCompanhias(const string &country) {
     Graph voos = Reading::readAllFiles();
     int count = 0;
     for (const auto &airline: voos.airlineTable) {
@@ -70,7 +70,7 @@ void pais_nrCompanhias(const string &country) {
     else cout << "Este pais tem um total de " << count << " companhias. \n \n";
 }
 
-void companhia_nrVoos(const string &airline1) {
+void Menu::companhia_nrVoos(const string &airline1) {
     Graph voos = Reading::readAllFiles();
     int count = 0;
     for (auto &node: voos.nodes) {
@@ -82,7 +82,7 @@ void companhia_nrVoos(const string &airline1) {
     else cout << "Esta companhia tem um total de " << count << " voos. \n";
 }
 
-void companhia_nrAeroportos(const string &airline1) {
+void Menu::companhia_nrAeroportos(const string &airline1) {
     Graph voos = Reading::readAllFiles();
     set<string> air_ports;
     for (auto &node: voos.nodes) {
@@ -100,7 +100,7 @@ void companhia_nrAeroportos(const string &airline1) {
     else cout << "Esta companhia faz ligacao entre " << air_ports.size() << " aeroportos. \n \n";
 }
 
-void aeroporto_nrVoos(const Airport &airport1) {
+void Menu::aeroporto_nrVoos(const Airport &airport1) {
     Graph voos = Reading::readAllFiles();
     auto itr = voos.airportTable.find(airport1);
     int number_voos = 0;
@@ -110,7 +110,7 @@ void aeroporto_nrVoos(const Airport &airport1) {
     cout << "Existe um total de " << number_voos << " voos a partir deste aeroporto. \n \n";
 }
 
-void nrCompanhias_voos_Airport(const Airport &airport1) {
+void Menu::nrCompanhias_voos_Airport(const Airport &airport1) {
     Graph voos = Reading::readAllFiles();
     auto itr = voos.airportTable.find(airport1);
     set<string> airlines_names;
@@ -127,7 +127,7 @@ void nrCompanhias_voos_Airport(const Airport &airport1) {
     cout << endl;
 }
 
-void nr_destinos_aeroporto(const Airport &airport1) {
+void Menu::nr_destinos_aeroporto(const Airport &airport1) {
     Graph voos = Reading::readAllFiles();
     auto itr = voos.airportTable.find(airport1);
     int numero_destinos = 0;
@@ -136,7 +136,7 @@ void nr_destinos_aeroporto(const Airport &airport1) {
          << " aeroportos/destinos diferentes possiveis de atingir partindo deste aeroporto. \n \n";
 }
 
-void nr_paises_aeroporto(const Airport &airport1) {
+void Menu::nr_paises_aeroporto(const Airport &airport1) {
     Graph voos = Reading::readAllFiles();
     set<string> numero_paises;
     auto itr = voos.airportTable.find(airport1);
@@ -151,21 +151,21 @@ void nr_paises_aeroporto(const Airport &airport1) {
          << " paises diferentes possiveis de atingir partindo deste aeroporto. \n \n";
 }
 
-void nr_aeroportos_Maxvoos(const Airport &airport, int number) {
+void Menu::nr_aeroportos_Maxvoos(const Airport &airport, int number) {
     Graph voos = Reading::readAllFiles();
     string code = airport.getAirportcode();
     cout << voos.countReachableAirports(code, number) << " aeroportos sao atingiveis com um maximo de " << number
          << " voos. \n \n";
 }
 
-void nr_cidades_Maxvoos(const Airport &airport, int number) {
+void Menu::nr_cidades_Maxvoos(const Airport &airport, int number) {
     Graph voos = Reading::readAllFiles();
     string code = airport.getAirportcode();
     cout << voos.countReachableCities(code, number) << " cidades sao atingiveis com um maximo de " << number
          << " voos. \n \n";
 }
 
-void nr_paises_Maxvoos(const Airport &airport, int number) {
+void Menu::nr_paises_Maxvoos(const Airport &airport, int number) {
     Graph voos = Reading::readAllFiles();
     string code = airport.getAirportcode();
     cout << voos.countReachableCountries(code, number) << " paises sao atingiveis com um maximo de " << number
@@ -178,7 +178,7 @@ struct Compare_Pair {
     }
 };
 
-void rede_top_k_aeroportos_voos(int k) {
+void Menu::rede_top_k_aeroportos_voos(int k) {
     Graph voos = Reading::readAllFiles();
     set<pair<string, int>, Compare_Pair> topk;
     for (auto it = voos.nodes.begin(); it != voos.nodes.end(); ++it) {
@@ -199,7 +199,7 @@ void rede_top_k_aeroportos_voos(int k) {
     }
 }
 
-void rede_top_k_aeroportos_companhias(int k) {
+void Menu::rede_top_k_aeroportos_companhias(int k) {
     Graph voos = Reading::readAllFiles();
     set<pair<string, int>, Compare_Pair> topk;
     for (auto it = voos.nodes.begin(); it != voos.nodes.end(); ++it) {
@@ -222,7 +222,7 @@ void rede_top_k_aeroportos_companhias(int k) {
     }
 }
 
-void Articulated_points(){
+void Menu::Articulated_points(){
     Graph voos = Reading::readAllFiles();
     list<string> list;
     for (auto &node : voos.nodes) {
@@ -239,6 +239,7 @@ void Articulated_points(){
     list.sort();
     for(auto el : list) cout << el << endl;
 }
+
 
 void Menu::readmenu() {
     Graph voos = Reading::readAllFiles();

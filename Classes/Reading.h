@@ -12,6 +12,11 @@
 
 class Reading {
     public:
+        ///@brief Reads airlines.csv, airports.csv, flights.csv
+        ///@note
+
+
+        ///@returns
         static Graph readAllFiles();
 };
 

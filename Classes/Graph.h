@@ -70,57 +70,127 @@ class Graph {
     bool hasDir;        // false: undirected; true: directed
 
 public:
-    vector<Node> nodes; // The list of nodes being representedq
+    ///@brief The vector of nodes being represented.
+    vector<Node> nodes;
 
-    // Constructor: nr nodes and direction (default: undirected)
+    ///@brief Constructor: nr nodes and direction (default: undirected)
+    ///@param nodes
+    ///@param dir
     explicit Graph(int nodes, bool dir = false);
 
-    // Add edge from source to destination with a certain weight
+    ///@brief Add edge from source to destination with a certain weight
+    ///@param src
+    ///@param dest
+    ///@param company - list containing all the airlines that execute the link for each edge
+    ///@param pos
     void addEdge(string src, const string& dest, const string& company, int pos);
 
+    ///@brief See the all the nodes
     void verNodes();
 
+    ///@brief Insert a new Airport in the airports unordered_set
+    ///@param airport
     void insertAirport_intotable(const Airport& airport);
 
+    ///@brief Insert a new Airline in the airlines unordered_set
+    ///@param airline
     void insertAirline_intotable(const Airline& airline);
 
+    ///@brief Setter for the airports unordered_set.
+    ///@param airportTable1
     void set_airportTable(unordered_set<Airport, AirportHash, AirportEqual> airportTable1);
 
+    ///@brief Setter for the airlines unordered_set.
+    ///@param airlineTable1
     void set_airlineTable(std::unordered_set<Airline, AirlineHash, AirlineEqual> airlineTable1);
 
+    ///@brief Getter for the airports unordered_set size
+    ///@returns The size of the airports unordered_set
     int get_airportTable_size() const;
 
+    ///@brief Getter for the airlines unordered_set size
+    ///@returns The size of the airlines unordered_set
     int get_airlineTable_size() const;
 
+    ///@brief Setter to set all nodes to unvisited
     void setFalse();
 
+    ///@brief Setter to set all node´s dist to -1
     void resetDist();
 
+    ///@brief Normal Breadth-First Search(BFS)
+    ///@param v
     void bfs(int v);
 
+    ///@brief
+    ///@param v
+    ///@param order
+    ///@param points
     void dfs_articulation_points(int v, int &order, list<string>& points);
 
+    ///@brief
+    ///@param v
+    ///@param d
+    ///@returns
     list<list<string>> distTwoAiports_bfs(const string& v, const string& d);
 
+    ///@brief BFS used to calculate the diameter
+    ///@param a
+    ///@returns
     int bfs_max_distance(int a);
 
+    ///@brief
+    ///@param airpA
+    ///@param airpB
+    ///@returns
     int distTwoAirports(const string& airpA,const string& airpB);
 
+    ///@brief
+    ///@param airpA
+    ///@param airpB
+    ///@param airlines
+    ///@returns
     int distTwoAirportsAirlineRest(const string& airpA,const string& airpB, const list<string>& airlines );
 
+    ///@brief
+    ///@param v
+    ///@param d
+    ///@param airlines
     list<list<string>> distTwoAiportsWithRest_bfs(const string& v, const string& d, const list<string>& airlines);
 
+    ///@brief
+    ///@param city1
+    ///@param city2
     void distTwoCities_bfs(const pair<string,string> city1, const pair<string,string> city2);
 
+    ///@brief Count the number of reachable airports with a max number of flights
+    ///@param startAirport
+    ///@param maxFlights
+    ///@returns The number of reachable airports
     int countReachableAirports(string startAirport, int maxFlights);
 
+    ///@brief Count the number of reachable cities with a max number of flights
+    ///@param startAirport
+    ///@param maxFlights
+    ///@returns The number of reachable cities
     int countReachableCities(string startAirport, int maxFlights);
 
+    ///@brief Count the number of reachable countries with a max number of flights
+    ///@param startAirport
+    ///@param maxFlights
+    ///@returns The number of reachable countries
     int countReachableCountries(string startAirport, int maxFlights);
 
+    float distance_longANDlat(string airport, float latitude, float longitude);
+
+    ///@brief Getter for the graph´s vector of nodes
+    ///@returns The graph´s vector of nodes
     vector<Node> get_nodes() const;
 
+    ///@brief Unordered_set with Airport objects
     std::unordered_set<Airport, AirportHash, AirportEqual> airportTable;
+
+    ///@brief Unordered_set with Airline objects
     std::unordered_set<Airline, AirlineHash, AirlineEqual> airlineTable;
 };
 

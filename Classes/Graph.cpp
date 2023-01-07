@@ -1,6 +1,9 @@
 #include <queue>
 #include <set>
 #include "Graph.h"
+#include <cmath>
+#include <iostream>
+using namespace std;
 
 Graph::Graph(int num, bool dir) : n(num), hasDir(dir), nodes(num+1) {}
 
@@ -486,6 +489,29 @@ void Graph::dfs_articulation_points(int v, int &order, list<string>& points) {
         auto itr = airportTable.find(airport);
         if(itr != airportTable.end()) points.push_front(itr->getAirportcode());
     }
+}
+
+float Graph::distance_longANDlat(string airport1, float latitude2, float longitude2){
+    float latitude1;
+    float longitude1;
+    Airport airport = Airport(airport1);
+    auto itr = airportTable.find(airport);
+    if(itr != airportTable.end()){
+        latitude1 = itr->getAirportlatitude();
+        longitude1 = itr->getAirportlongitude();
+    }
+    float dLat = (latitude2 - latitude1) * M_PI / 180.0;
+    float dLon = (longitude2 - longitude1) * M_PI / 180.0;
+
+    latitude1 = (latitude1) * M_PI / 180.0;
+    latitude2 = (latitude2) * M_PI / 180.0;
+
+    float a = pow(sin(dLat / 2), 2) +
+               pow(sin(dLon / 2), 2) *
+               cos(latitude1) * cos(latitude2);
+    float rad = 6371;
+    float c = 2 * asin(sqrt(a));
+    return rad * c;
 }
 
 
