@@ -24,5 +24,4 @@ public:
     string getFlightairline();
 };
 
-
 #endif //AED_2_FLIGHT_H

@@ -67,5 +67,4 @@ public:
     bool operator==(const Airport& other) const;
 };
 
-
 #endif //AED_2_AIRPORT_H

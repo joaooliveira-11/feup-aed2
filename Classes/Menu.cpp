@@ -3,6 +3,7 @@
 #include "Graph.h"
 #include "Flight.h"
 #include "Menu.h"
+using namespace std;
 
 Graph voos = Reading::readAllFiles();
 
@@ -31,7 +32,7 @@ void Menu::rede_diametro() {
         int d = voos.bfs_max_distance(v);
         if (d > max) max = d;
     }
-    cout << "Esta rede tem um diametro igual a " << max << ". \n \n";
+    cout << "Esta rede tem um diametro igual a " << max << ". \n";
 }
 
 void Menu::pais_nrAeroportos(const string &pais) {
@@ -166,19 +167,19 @@ struct Compare_Pair {
 
 void Menu::rede_top_k_aeroportos_voos(int k) {
     set<pair<string, int>, Compare_Pair> topk;
-    for (auto it = voos.nodes.begin(); it != voos.nodes.end(); ++it) {
+    for (auto & node : voos.nodes) {
         int number_voos = 0;
-        for (const auto &el: it->adj) {
+        for (const auto &el: node.adj) {
             number_voos += el.company.size();
         }
-        pair<string, int> pair = make_pair(it->src, number_voos);
+        pair<string, int> pair = make_pair(node.src, number_voos);
         topk.insert(pair);
     }
     cout << "Os " << k << " aeroportos com mais voos sao os seguintes:\n";
     int count = 0;
-    for (auto itr = topk.begin(); itr != topk.end(); itr++) {
+    for (const auto & itr : topk) {
         if (count != k) {
-            cout << itr->first << " com " << itr->second << " voos.\n";
+            cout << itr.first << " com " << itr.second << " voos.\n";
             count++;
         } else break;
     }
@@ -186,24 +187,25 @@ void Menu::rede_top_k_aeroportos_voos(int k) {
 
 void Menu::rede_top_k_aeroportos_companhias(int k) {
     set<pair<string, int>, Compare_Pair> topk;
-    for (auto it = voos.nodes.begin(); it != voos.nodes.end(); ++it) {
+    for (auto & node : voos.nodes) {
         set<string> airlines_names;
-        for (const auto &el: it->adj) {
+        for (const auto &el: node.adj) {
             for (const string &airline_code: el.company) {
                 airlines_names.insert(airline_code);
             }
         }
-        pair<string, int> pair = make_pair(it->src, airlines_names.size());
+        pair<string, int> pair = make_pair(node.src, airlines_names.size());
         topk.insert(pair);
     }
     cout << "Os " << k << " aeroportos com mais companhias sao os seguintes:\n";
     int count = 0;
-    for (auto itr = topk.begin(); itr != topk.end(); itr++) {
+    for (const auto & itr : topk) {
         if (count != k) {
-            cout << itr->first << " com " << itr->second << " companhias.\n";
+            cout << itr.first << " com " << itr.second << " companhias.\n";
             count++;
         } else break;
     }
+    cout << endl;
 }
 
 void Menu::Articulated_points(){
@@ -213,16 +215,13 @@ void Menu::Articulated_points(){
         node.low = 0;
         node.num = 0;
     }
-
     int order = 1;
     for (int v = 0; v < voos.nodes.size(); v++)
-        if (!voos.nodes[v].visited)
-            voos.dfs_articulation_points(v, order, list);
-
+        if (!voos.nodes[v].visited) voos.dfs_articulation_points(v, order, list);
     list.sort();
-    //for(auto el : list) cout << el << endl; Para ver os articulated
+    //Para ver os articulated points
+    //for(auto el : list) cout << el << endl;
     cout << "Existe um total de " << list.size() << " pontos de articulacao. \n";
-    cout << endl;
 }
 
 
@@ -232,20 +231,14 @@ void Menu::readmenu() {
     char tecla;
     int top_k;
 
-/*
-    pair<string,string> c1("Porto","Portugal");
-    pair<string,string> c2("New York","United States");
-    voos.distTwoCities_bfs(c1,c2);
-*/
-
     while (flag) {
         cout << "Insira uma tecla de acordo com o que pretende fazer:\n"
                 "1 : Saber qual a melhor maneira de voar de um local para o outro. (Local = aeroporto) \n"
-                "2 : Saber qual a melhor maneira de voar de um local para o outro com restricao de airline. (Local = aeroporto). \n"
+                "2 : Saber qual a melhor maneira de voar de um local para o outro com restricao de companhia. (Local = aeroporto). \n"
                 "3 : Saber qual a melhor maneira de voar de um local para o outro. (Local = cidade) \n"
                 "4 : Saber qual a melhor maneira de voar de um local para o outro. (Local = conjunto de coordenadas) \n"
                 "5 : Obter informaoes acerca de um aeroporto. \n"
-                "6 : Ver as estatisticas globais de uma rede. \n"
+                "6 : Ver as estatisticas globais. \n"
                 "q : Quit. \n";
         cin >> tecla;
         switch (tecla) {
@@ -288,11 +281,12 @@ void Menu::readmenu() {
                     cin >> arrival_airport;
                     airport2 = Airport(arrival_airport);
                 }
-                cout << "Insira a airline que pretende usar.(ex.: CDG) \n";
+                cout << "Insira o código da primeira (ou única) companhia que pretende usar.(ex.: CDG) \n";
                 cin >> answer;
                 airlines.push_back(answer);
                 while(answer != "q") {
-                    cout << "Insira a airline que pretende usar ou q para executar.(ex.: CDG) \n";
+                    cout << "Insira mais um código se pretender usar mais alguma companhia.(ex.: CDG) \n"
+                            "Se não pretender usar mais companhias aéreas, insira q. \n";
                     cin >> answer;
                     airlines.push_back(answer);
                 }
@@ -304,14 +298,14 @@ void Menu::readmenu() {
                 string arrival_city, arrival_country;
 
                 cout << "\nInsira o nome da cidade de partida. (ex.: Porto)\n";
-                std::getline(std::cin >> std::ws,departure_city);
+                getline(cin >> ws,departure_city);
                 cout << "\nInsira o nome do pais da cidade de partida. (ex.: Portugal)\n";
-                std::getline(std::cin >> std::ws,departure_country);
+                getline(cin >> ws,departure_country);
 
                 cout << "\nInsira o codigo da cidade de chegada. (ex.: Lisboa)\n";
-                std::getline(std::cin >> std::ws,arrival_city);
+                getline(cin >> ws,arrival_city);
                 cout << "\nInsira o nome do pais da cidade de chegada. (ex.: Portugal)\n";
-                std::getline(std::cin >> std::ws,arrival_country);
+                getline(cin >> ws,arrival_country);
 
                 pair<string, string> pair1 = make_pair(departure_city, departure_country);
                 pair<string, string> pair2 = make_pair(arrival_city, arrival_country);
@@ -326,12 +320,10 @@ void Menu::readmenu() {
                 cin >> latitude1;
                 cout << "\nInsira a longitude do local de partida. (ex.: 2.359444)\n";
                 cin >> longitude1;
-
                 cout << "\nInsira a latitude do local de chegada. (ex.: 48.725278)\n";
                 cin >> latitude2;
                 cout << "\nInsira a longitude do local de chegada. (ex.: 2.359444)\n";
                 cin >> longitude2;
-
                 cout << "\nInsira a distancia maxima entre as coordenadas e os aeroportos. (ex.: 30.0 (km) )\n";
                 cin >> distMax;
 
@@ -416,7 +408,7 @@ void Menu::readmenu() {
                 switch (tecla) {
                     case '1':
                         cout << "Insira o valor de k para o top-k de aeroportos com mais voos e/ou companhias. \n";
-                        cin >> top_k;  // falta adicionar flag caso seja maior que o numero de aeroportos
+                        cin >> top_k;
                         rede_nrAeroportos();
                         rede_nrVoos();
                         rede_nrCompanhias();

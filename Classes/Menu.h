@@ -102,5 +102,4 @@ public:
     static void Articulated_points();
 };
 
-
 #endif
