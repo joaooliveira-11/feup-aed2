@@ -4,8 +4,9 @@
 #include "Flight.h"
 #include "Menu.h"
 
+Graph voos = Reading::readAllFiles();
+
 void Menu::rede_nrVoos() {
-    Graph voos = Reading::readAllFiles();
     int count = 0;
     for (auto &node: voos.nodes) {
         for (const auto &el: node.adj) {
@@ -16,17 +17,14 @@ void Menu::rede_nrVoos() {
 }
 
 void Menu::rede_nrAeroportos() {
-    Graph voos = Reading::readAllFiles();
     cout << "Esta rede tem um total de " << voos.airportTable.size() << " aeroportos.\n";
 }
 
 void Menu::rede_nrCompanhias() {
-    Graph voos = Reading::readAllFiles();
     cout << "Esta rede tem um total de " << voos.airlineTable.size() << " companhias. \n";
 }
 
 void Menu::rede_diametro() {
-    Graph voos = Reading::readAllFiles();
     int max = 0;
     voos.nodes[0].visited = true;
     for (int v = 0; v < voos.nodes.size(); v++) {
@@ -37,7 +35,6 @@ void Menu::rede_diametro() {
 }
 
 void Menu::pais_nrAeroportos(const string &pais) {
-    Graph voos = Reading::readAllFiles();
     int count = 0;
     for (const auto &itr: voos.airportTable) {
         if (itr.getAirportcountry() == pais) count++;
@@ -47,7 +44,6 @@ void Menu::pais_nrAeroportos(const string &pais) {
 }
 
 void Menu::pais_nrVoos(const string &country) {
-    Graph voos = Reading::readAllFiles();
     int count = 0;
     for (const auto &airport: voos.airportTable) {
         if (airport.getAirportcountry() == country) {
@@ -61,7 +57,6 @@ void Menu::pais_nrVoos(const string &country) {
 }
 
 void Menu::pais_nrCompanhias(const string &country) {
-    Graph voos = Reading::readAllFiles();
     int count = 0;
     for (const auto &airline: voos.airlineTable) {
         if (airline.getAirlinecountry() == country) count++;
@@ -71,7 +66,6 @@ void Menu::pais_nrCompanhias(const string &country) {
 }
 
 void Menu::companhia_nrVoos(const string &airline1) {
-    Graph voos = Reading::readAllFiles();
     int count = 0;
     for (auto &node: voos.nodes) {
         for (const auto &el: node.adj) {
@@ -83,7 +77,6 @@ void Menu::companhia_nrVoos(const string &airline1) {
 }
 
 void Menu::companhia_nrAeroportos(const string &airline1) {
-    Graph voos = Reading::readAllFiles();
     set<string> air_ports;
     for (auto &node: voos.nodes) {
         for (const auto &el: node.adj) {
@@ -101,7 +94,6 @@ void Menu::companhia_nrAeroportos(const string &airline1) {
 }
 
 void Menu::aeroporto_nrVoos(const Airport &airport1) {
-    Graph voos = Reading::readAllFiles();
     auto itr = voos.airportTable.find(airport1);
     int number_voos = 0;
     for (const auto &el: voos.nodes[itr->getNumCode() - 1].adj) {
@@ -111,7 +103,6 @@ void Menu::aeroporto_nrVoos(const Airport &airport1) {
 }
 
 void Menu::nrCompanhias_voos_Airport(const Airport &airport1) {
-    Graph voos = Reading::readAllFiles();
     auto itr = voos.airportTable.find(airport1);
     set<string> airlines_names;
     for (const auto &el: voos.nodes[itr->getNumCode() - 1].adj) {
@@ -128,7 +119,6 @@ void Menu::nrCompanhias_voos_Airport(const Airport &airport1) {
 }
 
 void Menu::nr_destinos_aeroporto(const Airport &airport1) {
-    Graph voos = Reading::readAllFiles();
     auto itr = voos.airportTable.find(airport1);
     int numero_destinos = 0;
     for (auto el: voos.nodes[itr->getNumCode() - 1].adj) numero_destinos++;
@@ -137,7 +127,6 @@ void Menu::nr_destinos_aeroporto(const Airport &airport1) {
 }
 
 void Menu::nr_paises_aeroporto(const Airport &airport1) {
-    Graph voos = Reading::readAllFiles();
     set<string> numero_paises;
     auto itr = voos.airportTable.find(airport1);
     string country = itr->getAirportcountry();
@@ -152,21 +141,18 @@ void Menu::nr_paises_aeroporto(const Airport &airport1) {
 }
 
 void Menu::nr_aeroportos_Maxvoos(const Airport &airport, int number) {
-    Graph voos = Reading::readAllFiles();
     string code = airport.getAirportcode();
     cout << voos.countReachableAirports(code, number) << " aeroportos sao atingiveis com um maximo de " << number
          << " voos. \n \n";
 }
 
 void Menu::nr_cidades_Maxvoos(const Airport &airport, int number) {
-    Graph voos = Reading::readAllFiles();
     string code = airport.getAirportcode();
     cout << voos.countReachableCities(code, number) << " cidades sao atingiveis com um maximo de " << number
          << " voos. \n \n";
 }
 
 void Menu::nr_paises_Maxvoos(const Airport &airport, int number) {
-    Graph voos = Reading::readAllFiles();
     string code = airport.getAirportcode();
     cout << voos.countReachableCountries(code, number) << " paises sao atingiveis com um maximo de " << number
          << " voos. \n \n";
@@ -179,7 +165,6 @@ struct Compare_Pair {
 };
 
 void Menu::rede_top_k_aeroportos_voos(int k) {
-    Graph voos = Reading::readAllFiles();
     set<pair<string, int>, Compare_Pair> topk;
     for (auto it = voos.nodes.begin(); it != voos.nodes.end(); ++it) {
         int number_voos = 0;
@@ -193,14 +178,13 @@ void Menu::rede_top_k_aeroportos_voos(int k) {
     int count = 0;
     for (auto itr = topk.begin(); itr != topk.end(); itr++) {
         if (count != k) {
-            cout << itr->first << " com" << itr->second << " voos.\n";
+            cout << itr->first << " com " << itr->second << " voos.\n";
             count++;
         } else break;
     }
 }
 
 void Menu::rede_top_k_aeroportos_companhias(int k) {
-    Graph voos = Reading::readAllFiles();
     set<pair<string, int>, Compare_Pair> topk;
     for (auto it = voos.nodes.begin(); it != voos.nodes.end(); ++it) {
         set<string> airlines_names;
@@ -216,14 +200,13 @@ void Menu::rede_top_k_aeroportos_companhias(int k) {
     int count = 0;
     for (auto itr = topk.begin(); itr != topk.end(); itr++) {
         if (count != k) {
-            cout << itr->first << " com" << itr->second << " companhias.\n";
+            cout << itr->first << " com " << itr->second << " companhias.\n";
             count++;
         } else break;
     }
 }
 
 void Menu::Articulated_points(){
-    Graph voos = Reading::readAllFiles();
     list<string> list;
     for (auto &node : voos.nodes) {
         node.visited = false;
@@ -231,32 +214,38 @@ void Menu::Articulated_points(){
         node.num = 0;
     }
 
-    int order = 0;
+    int order = 1;
     for (int v = 0; v < voos.nodes.size(); v++)
         if (!voos.nodes[v].visited)
             voos.dfs_articulation_points(v, order, list);
 
     list.sort();
-    for(auto el : list) cout << el << endl;
+    //for(auto el : list) cout << el << endl; Para ver os articulated
+    cout << "Existe um total de " << list.size() << " pontos de articulacao. \n";
+    cout << endl;
 }
 
 
 void Menu::readmenu() {
-    Graph voos = Reading::readAllFiles();
     bool flag = true;
     string answer, airport_code, departure_airport, arrival_airport;
     char tecla;
     int top_k;
+
 /*
     pair<string,string> c1("Porto","Portugal");
     pair<string,string> c2("New York","United States");
     voos.distTwoCities_bfs(c1,c2);
-    */
+*/
+
     while (flag) {
         cout << "Insira uma tecla de acordo com o que pretende fazer:\n"
                 "1 : Saber qual a melhor maneira de voar de um local para o outro. (Local = aeroporto) \n"
-                "2 : Obter informaoes acerca de um aeroporto. \n"
-                "3 : Ver as estatisticas globais de uma rede. \n"
+                "2 : Saber qual a melhor maneira de voar de um local para o outro com restricao de airline. (Local = aeroporto). \n"
+                "3 : Saber qual a melhor maneira de voar de um local para o outro. (Local = cidade) \n"
+                "4 : Saber qual a melhor maneira de voar de um local para o outro. (Local = conjunto de coordenadas) \n"
+                "5 : Obter informaoes acerca de um aeroporto. \n"
+                "6 : Ver as estatisticas globais de uma rede. \n"
                 "q : Quit. \n";
         cin >> tecla;
         switch (tecla) {
@@ -281,6 +270,78 @@ void Menu::readmenu() {
                 break;
             }
             case '2': {
+                list<string> airlines;
+                string answer;
+                cout << "\nInsira o codigo IATA do aeroporto de partida. (ex.: CDG)\n";
+                cin >> departure_airport;
+                Airport airport = Airport(departure_airport);
+                while (voos.airportTable.find(airport) == voos.airportTable.end()) {
+                    cout << "Este aeroporto nao existe na nossa base de dados, insira um codigo valido. (ex.: CDG) \n";
+                    cin >> departure_airport;
+                    airport = Airport(departure_airport);
+                }
+                cout << "\nInsira o codigo IATA do aeroporto de chegada. (ex.: CDG)\n";
+                cin >> arrival_airport;
+                Airport airport2 = Airport(arrival_airport);
+                while (voos.airportTable.find(airport2) == voos.airportTable.end()) {
+                    cout << "Este aeroporto nao existe na nossa base de dados, insira um codigo valido. (ex.: CDG) \n";
+                    cin >> arrival_airport;
+                    airport2 = Airport(arrival_airport);
+                }
+                cout << "Insira a airline que pretende usar.(ex.: CDG) \n";
+                cin >> answer;
+                airlines.push_back(answer);
+                while(answer != "q") {
+                    cout << "Insira a airline que pretende usar ou q para executar.(ex.: CDG) \n";
+                    cin >> answer;
+                    airlines.push_back(answer);
+                }
+                voos.distTwoAirportsAirlineRest(departure_airport, arrival_airport, airlines);
+                break;
+            }
+            case '3':{
+                string departure_city, departure_country;
+                string arrival_city, arrival_country;
+
+                cout << "\nInsira o nome da cidade de partida. (ex.: Porto)\n";
+                std::getline(std::cin >> std::ws,departure_city);
+                cout << "\nInsira o nome do pais da cidade de partida. (ex.: Portugal)\n";
+                std::getline(std::cin >> std::ws,departure_country);
+
+                cout << "\nInsira o codigo da cidade de chegada. (ex.: Lisboa)\n";
+                std::getline(std::cin >> std::ws,arrival_city);
+                cout << "\nInsira o nome do pais da cidade de chegada. (ex.: Portugal)\n";
+                std::getline(std::cin >> std::ws,arrival_country);
+
+                pair<string, string> pair1 = make_pair(departure_city, departure_country);
+                pair<string, string> pair2 = make_pair(arrival_city, arrival_country);
+                voos.distTwoCities_bfs(pair1, pair2);
+                break;
+            }
+            case '4':{
+                float latitude1, longitude1;
+                float latitude2, longitude2;
+                float distMax;
+                cout << "\nInsira a latitude do local de partida. (ex.: 48.725278)\n";
+                cin >> latitude1;
+                cout << "\nInsira a longitude do local de partida. (ex.: 2.359444)\n";
+                cin >> longitude1;
+
+                cout << "\nInsira a latitude do local de chegada. (ex.: 48.725278)\n";
+                cin >> latitude2;
+                cout << "\nInsira a longitude do local de chegada. (ex.: 2.359444)\n";
+                cin >> longitude2;
+
+                cout << "\nInsira a distancia maxima entre as coordenadas e os aeroportos. (ex.: 30.0 (km) )\n";
+                cin >> distMax;
+
+                pair<float, float> pair1 = make_pair(latitude1, longitude1);
+                pair<float, float> pair2 = make_pair(latitude2, longitude2);
+
+                voos.distTwoCoordinates_bfs(pair1, pair2, distMax);
+                break;
+            }
+            case '5': {
                 cout << "Insira o codigo IATA do aeroporto. (ex.: CDG)\n";
                 cin >> airport_code;
                 Airport airport = Airport(airport_code);
@@ -345,7 +406,7 @@ void Menu::readmenu() {
                 }
                 break;
             }
-            case '3': {
+            case '6': {
                 cout << "Insira uma tecla de acordo com o que pretende fazer:\n"
                         "1 : Saber estatisticas globais da rede. \n"
                         "2 : Saber estatisticas globais de um pais. \n"
@@ -359,7 +420,8 @@ void Menu::readmenu() {
                         rede_nrAeroportos();
                         rede_nrVoos();
                         rede_nrCompanhias();
-                        //rede_diametro();  // colocar a opcao de quer saber o diametro? porque demora muito tempo uma pesquisa em largura com 69k dados
+                        rede_diametro();
+                        Articulated_points();
                         rede_top_k_aeroportos_voos(top_k);
                         rede_top_k_aeroportos_companhias(top_k);
                         break;
@@ -369,10 +431,7 @@ void Menu::readmenu() {
                         cin >> country;
                         pais_nrAeroportos(country);
                         pais_nrVoos(country);
-                        pais_nrCompanhias(
-                                country);  // perguntar ao prof se é o numero de companhias areas envolvidas em voos
-                        // que saem de areportos portugueses
-                        // ou de fundação portuguesa no ficheiro airlines (exemplo portugal)
+                        pais_nrCompanhias(country);
                         break;
                     }
                     case '3': {

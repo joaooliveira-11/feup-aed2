@@ -26,13 +26,6 @@ int Graph::get_airportTable_size() const{
     return this->airportTable.size();
 }
 
-int Graph::get_airlineTable_size() const{
-    return this->airlineTable.size();
-}
-
-vector<Graph::Node> Graph::get_nodes() const{
-    return this->nodes;
-}
 
 void Graph::addEdge(string src, const string& dest, const string& company, int pos){
     nodes[pos].src=src;
@@ -49,21 +42,6 @@ void Graph::addEdge(string src, const string& dest, const string& company, int p
        auxList.push_back(company);
        nodes[pos].adj.push_back({dest,auxList});
    }
-}
-
-void Graph::verNodes(){
-    int count = 1;
-    for (auto & node : nodes){
-        for(const auto& x : node.adj){
-            for(const auto& y:x.company){
-                cout << node.src << " | "
-                     << y << " | "
-                     << x.dest << " | "
-                     << count <<endl;
-                count++;
-            }
-        }
-    }
 }
 
 void Graph::setFalse() {
