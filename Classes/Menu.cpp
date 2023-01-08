@@ -281,12 +281,12 @@ void Menu::readmenu() {
                     cin >> arrival_airport;
                     airport2 = Airport(arrival_airport);
                 }
-                cout << "Insira o código da primeira (ou única) companhia que pretende usar.(ex.: CDG) \n";
+                cout << "Insira o codigo da primeira (ou unica) companhia que pretende usar.(ex.: CDG) \n";
                 cin >> answer;
                 airlines.push_back(answer);
                 while(answer != "q") {
-                    cout << "Insira mais um código se pretender usar mais alguma companhia.(ex.: CDG) \n"
-                            "Se não pretender usar mais companhias aéreas, insira q. \n";
+                    cout << "Insira mais um codigo se pretender usar mais alguma companhia.(ex.: CDG) \n"
+                            "Se nao pretender usar mais companhias aereas, insira q. \n";
                     cin >> answer;
                     airlines.push_back(answer);
                 }
