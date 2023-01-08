@@ -9,18 +9,9 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
-<link href="navtree.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="resize.js"></script>
-<script type="text/javascript" src="navtreedata.js"></script>
-<script type="text/javascript" src="navtree.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
-<script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-  $(document).ready(function() { init_search(); });
-/* @license-end */
-</script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -34,18 +25,6 @@
    </div>
    <div id="projectbrief">Unidade Curricular AED</div>
   </td>
-    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
-          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
-          <input type="text" id="MSearchField" value="" placeholder="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
-          </span>
-        </div>
-</td>
  </tr>
  </tbody>
 </table>
@@ -57,23 +36,17 @@
 var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license-end */
 </script>
-</div><!-- top -->
-<div id="side-nav" class="ui-resizable side-nav-resizable">
-  <div id="nav-tree">
-    <div id="nav-tree-contents">
-      <div id="nav-sync" class="sync"></div>
-    </div>
-  </div>
-  <div id="splitbar" style="-moz-user-select:none;" 
-       class="ui-resizable-handle">
-  </div>
-</div>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('class_graph.html',''); initResizable(); });
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
 /* @license-end */
 </script>
-<div id="doc-content">
+<div id="main-nav"></div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -95,6 +68,7 @@ $(document).ready(function(){initNavTree('class_graph.html',''); initResizable()
 </div>
 </div>
 
+</div><!-- top -->
 <div class="header">
   <div class="headertitle"><div class="title">Graph Member List</div></div>
 </div><!--header-->
@@ -111,14 +85,14 @@ $(document).ready(function(){initNavTree('class_graph.html',''); initResizable()
   <tr class="even"><td class="entry"><a class="el" href="class_graph.html#a57d20cdaf222a3e5e24f3ac8ceaa8464">countReachableCities</a>(string startAirport, int maxFlights)</td><td class="entry"><a class="el" href="class_graph.html">Graph</a></td><td class="entry"></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="class_graph.html#aac7444aadcbd1d58d3bb28a235dd0b88">countReachableCountries</a>(string startAirport, int maxFlights)</td><td class="entry"><a class="el" href="class_graph.html">Graph</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="class_graph.html#aee57787cb91e8b6ca3e36fcf2eda55c1">dfs_articulation_points</a>(int v, int &amp;order, list&lt; string &gt; &amp;points)</td><td class="entry"><a class="el" href="class_graph.html">Graph</a></td><td class="entry"></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="class_graph.html#a5ae316bf5cfbc30d903837c0b782c7ec">distTwoAiports_bfs</a>(const string &amp;v, const string &amp;d)</td><td class="entry"><a class="el" href="class_graph.html">Graph</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_graph.html#a0e4a3a7891a3ccf1713c7dd8cb97e269">distTwoAiportsWithRest_bfs</a>(const string &amp;v, const string &amp;d, const list&lt; string &gt; &amp;airlines)</td><td class="entry"><a class="el" href="class_graph.html">Graph</a></td><td class="entry"></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="class_graph.html#a8bc66e3bbab0afbcd5e27b2295a1fda5">distTwoAirports</a>(const string &amp;airpA, const string &amp;airpB)</td><td class="entry"><a class="el" href="class_graph.html">Graph</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_graph.html#a9cc23005553b3d463176071c1675d833">distTwoAirportsAirlineRest</a>(const string &amp;airpA, const string &amp;airpB, const list&lt; string &gt; &amp;airlines)</td><td class="entry"><a class="el" href="class_graph.html">Graph</a></td><td class="entry"></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="class_graph.html#aaa033c6799ba061000807d45fcd62c71">distTwoCities_bfs</a>(const pair&lt; string, string &gt; city1, const pair&lt; string, string &gt; city2)</td><td class="entry"><a class="el" href="class_graph.html">Graph</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_graph.html#a87317777f72ae7ea56af98db9cfc5764">get_airlineTable_size</a>() const</td><td class="entry"><a class="el" href="class_graph.html">Graph</a></td><td class="entry"></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="class_graph.html#a4effa7e2f8356a30fc6cbdfefe660990">get_airportTable_size</a>() const</td><td class="entry"><a class="el" href="class_graph.html">Graph</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_graph.html#a7be4102c563e71eb2f47891a8ad187f4">get_nodes</a>() const</td><td class="entry"><a class="el" href="class_graph.html">Graph</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="class_graph.html#a305633d616928cb62f0b110622f483c5">distance_longANDlat</a>(string airport, float latitude, float longitude)</td><td class="entry"><a class="el" href="class_graph.html">Graph</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_graph.html#a5ae316bf5cfbc30d903837c0b782c7ec">distTwoAiports_bfs</a>(const string &amp;v, const string &amp;d)</td><td class="entry"><a class="el" href="class_graph.html">Graph</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="class_graph.html#a0e4a3a7891a3ccf1713c7dd8cb97e269">distTwoAiportsWithRest_bfs</a>(const string &amp;v, const string &amp;d, const list&lt; string &gt; &amp;airlines)</td><td class="entry"><a class="el" href="class_graph.html">Graph</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_graph.html#a8bc66e3bbab0afbcd5e27b2295a1fda5">distTwoAirports</a>(const string &amp;airpA, const string &amp;airpB)</td><td class="entry"><a class="el" href="class_graph.html">Graph</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="class_graph.html#a9cc23005553b3d463176071c1675d833">distTwoAirportsAirlineRest</a>(const string &amp;airpA, const string &amp;airpB, const list&lt; string &gt; &amp;airlines)</td><td class="entry"><a class="el" href="class_graph.html">Graph</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_graph.html#acb39a4af4cc7237d00986f3ef4a5626b">distTwoCities_bfs</a>(const pair&lt; string, string &gt; &amp;city1, const pair&lt; string, string &gt; city2)</td><td class="entry"><a class="el" href="class_graph.html">Graph</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="class_graph.html#aba84c756987c8c0f5775d64189072cfc">distTwoCoordinates_bfs</a>(const pair&lt; float, float &gt; coord1, const pair&lt; float, float &gt; coord2, float distMax)</td><td class="entry"><a class="el" href="class_graph.html">Graph</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_graph.html#a4effa7e2f8356a30fc6cbdfefe660990">get_airportTable_size</a>() const</td><td class="entry"><a class="el" href="class_graph.html">Graph</a></td><td class="entry"></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="class_graph.html#a18b4f6dec368300991b68dd75e39a5e9">Graph</a>(int nodes, bool dir=false)</td><td class="entry"><a class="el" href="class_graph.html">Graph</a></td><td class="entry"><span class="mlabel">explicit</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="class_graph.html#a03340b8d8fca028ed4dd4fbc58bec762">insertAirline_intotable</a>(const Airline &amp;airline)</td><td class="entry"><a class="el" href="class_graph.html">Graph</a></td><td class="entry"></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="class_graph.html#a4d0da18762d5222207d0f6d13c071cff">insertAirport_intotable</a>(const Airport &amp;airport)</td><td class="entry"><a class="el" href="class_graph.html">Graph</a></td><td class="entry"></td></tr>
@@ -127,14 +101,10 @@ $(document).ready(function(){initNavTree('class_graph.html',''); initResizable()
   <tr class="even"><td class="entry"><a class="el" href="class_graph.html#ae5e17c02525c35036626f2683c4e42f1">set_airlineTable</a>(std::unordered_set&lt; Airline, AirlineHash, AirlineEqual &gt; airlineTable1)</td><td class="entry"><a class="el" href="class_graph.html">Graph</a></td><td class="entry"></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="class_graph.html#ac602377a03cf295004c5ac8e5b6142fb">set_airportTable</a>(unordered_set&lt; Airport, AirportHash, AirportEqual &gt; airportTable1)</td><td class="entry"><a class="el" href="class_graph.html">Graph</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="class_graph.html#ae10dedaf05aba5cb7deb3be47002a5e6">setFalse</a>()</td><td class="entry"><a class="el" href="class_graph.html">Graph</a></td><td class="entry"></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="class_graph.html#a15bd8b36444f2993dcac71857062627a">verNodes</a>()</td><td class="entry"><a class="el" href="class_graph.html">Graph</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
-</div><!-- doc-content -->
 <!-- start footer part -->
-<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
-  <ul>
-    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5 </li>
-  </ul>
-</div>
+<hr class="footer"/><address class="footer"><small>
+Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
+</small></address>
 </body>
 </html>
