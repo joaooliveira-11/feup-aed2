@@ -1,10 +1,15 @@
-# AED-Projeto2 - Transportes Aéreos
+# AED Second Project
 
-## Project Description
+>**Project**
+>Curricular Unit: [Algoritmos e Estruturas de Dados](https://sigarra.up.pt/feup/pt/ucurr_geral.ficha_uc_view?pv_ocorrencia_id=501673), 2nd year
 
-Neste projeto, o objetivo é implementar um sistema capaz de
-providenciar ajuda para quem quer usar a rede de voos das companhias
-aéreas de todo o mundo.
+## Objectives
 
-Projeto desenvolvido por Andre Pinto(up202108856), Diana Martins(up202108815) e João Oliveira (up202108737).
+Implement a system capable of providing assistance to those who want to use the worldwide network of airline flights
+
+### Team
+
+1. Andre Pinto (up202108856@edu.fe.up.pt)
+2. Diana Martins (up202108815@edu.fe.up.pt)
+3. João Oliveira (up202108737@edu.fe.up.pt)
 
